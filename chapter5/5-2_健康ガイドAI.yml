@@ -1,0 +1,292 @@
+app:
+  description: このアプリは、PDFファイルをナレッジとして登録し、RAG技術を用いて文書内の関連情報を検索・参照しながら質問応答を行うシステムです。DifyのチャットフローとLLMを組み合わせ、登録した文書の内容に基づいて正確な回答を生成します。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 健康ガイドAI
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.11@390c87cc0f17370a70d3b214cd71a8de81fe9d6b52e6a38287acde034138b672
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1732974300170-source-1741160516962-target
+      source: '1732974300170'
+      sourceHandle: source
+      target: '1741160516962'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1741160516962-source-1741161012606-target
+      source: '1741160516962'
+      sourceHandle: source
+      target: '1741161012606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1741161012606-source-1741161707221-target
+      source: '1741161012606'
+      sourceHandle: source
+      target: '1741161707221'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1732974300170'
+      position:
+        x: 30
+        y: 250.5
+      positionAbsolute:
+        x: 30
+        y: 250.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - d1faa255-1571-4d88-a5be-3e6b8d5cbf60
+        - 4206a155-f7e4-4f15-8707-81ceff0d1a57
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: null
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: text-embedding-3-large
+              embedding_provider_name: langgenius/openai/openai
+              vector_weight: 1
+        query_variable_selector:
+        - '1732974300170'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 知識取得
+        type: knowledge-retrieval
+      height: 119
+      id: '1741160516962'
+      position:
+        x: 334
+        y: 250.5
+      positionAbsolute:
+        x: 334
+        y: 250.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1741160516962'
+          - result
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 72372ef5-7777-4bf2-8f98-51df530dbaa9
+          role: system
+          text: 'あなたは親切で正確なアシスタントです。
+
+            与えられた文脈に基づいて質問に回答してください。
+
+
+            ### 制約条件
+
+            - 必ず文脈の情報のみを使用して回答すること
+
+            - 文脈に含まれない情報については「文脈に情報がありません」と伝えること
+
+            - 推測や一般的な知識での補完は行わないこと
+
+
+            ### 文脈
+
+            {{#context#}}'
+        - id: 7f3b27ae-eb3b-49bc-8c50-79dbffc57c3f
+          role: user
+          text: '{{#sys.query#}}
+
+            '
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1741161012606'
+      position:
+        x: 638
+        y: 250.5
+      positionAbsolute:
+        x: 638
+        y: 250.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1741161012606.text#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 104
+      id: '1741161707221'
+      position:
+        x: 942
+        y: 250.5
+      positionAbsolute:
+        x: 942
+        y: 250.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: nyanta
+        desc: ''
+        height: 156
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"動かすには","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"ナレッジの追加設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"​健康のすべて.pdf","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"をナレッジとして作成したものを追加してください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ナレッジを追加した際の検索設定は1つのナレッジでは適用されないため、そのままの設定で大丈夫です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 606
+      height: 156
+      id: '1743129050695'
+      position:
+        x: 334
+        y: 51.636249950128814
+      positionAbsolute:
+        x: 334
+        y: 51.636249950128814
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 606
+    - data:
+        author: nyanta
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"自作のRAGを作成する際は、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":1,"mode":"normal","style":"","text":"LLMノードにsys.queryを設定する","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"のを忘れないように注意してください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 383
+      height: 88
+      id: '1743334297335'
+      position:
+        x: 638
+        y: 383.77653937235357
+      positionAbsolute:
+        x: 638
+        y: 383.77653937235357
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 383
+    viewport:
+      x: 5.5156564914738055
+      y: 98.42251846602426
+      zoom: 0.9548416039104163

@@ -1,0 +1,586 @@
+app:
+  description: このアプリは、ユーザーからの問い合わせを自動分類し、各部門（人事・IT等）の専門知識を持つAIが回答する社内向けチャットボットです。質問に応じて適切な部門のAIが対応することで、効率的な問い合わせ対応を実現します。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 社内問い合わせ対応チャットボット(回答ノードを前に置く)
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1732148821040-1-1732148890780-target
+      selected: false
+      source: '1732148821040'
+      sourceHandle: '1'
+      target: '1732148890780'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 17321489514680-source-1732149235412-target
+      selected: false
+      source: '17321489514680'
+      sourceHandle: source
+      target: '1732149235412'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1732149303193-source-1732149235412-target
+      selected: false
+      source: '1732149303193'
+      sourceHandle: source
+      target: '1732149235412'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1732148890780-source-1732149235412-target
+      selected: false
+      source: '1732148890780'
+      sourceHandle: source
+      target: '1732149235412'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1732148821040-1732148840962-17321489514680-target
+      selected: false
+      source: '1732148821040'
+      sourceHandle: '1732148840962'
+      target: '17321489514680'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1732148821040-1732148842302-1732149303193-target
+      selected: false
+      source: '1732148821040'
+      sourceHandle: '1732148842302'
+      target: '1732149303193'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: answer
+      id: 1732148646928-source-1732192607681-target
+      selected: false
+      source: '1732148646928'
+      sourceHandle: source
+      target: '1732192607681'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: question-classifier
+      id: 1732192607681-source-1732148821040-target
+      selected: false
+      source: '1732192607681'
+      sourceHandle: source
+      target: '1732148821040'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: answer
+      id: 1732149235412-source-answer-target
+      selected: false
+      source: '1732149235412'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1732148646928'
+      position:
+        x: 45.90093797486398
+        y: 292.3571428571428
+      positionAbsolute:
+        x: 45.90093797486398
+        y: 292.3571428571428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: "{{#1732149235412.output#}}\n\n---\nAIキャットグループ 総合問い合わせ窓口をご利用いただき、ありがとうございます。\n\
+          \n【受付時間】\n平日 9:00-17:30（土日祝日・年末年始を除く）\n\n【お問い合わせ先】\n◆人事部\n  内線：1111\n  メール：hr@aicat.example.com\n\
+          \  ※給与・勤怠・福利厚生に関するご質問\n\n◆総務部\n  内線：2222\n  メール：soumu@aicat.example.com\n\
+          \  ※施設・備品・社内イベントに関するご質問\n\n◆ITヘルプデスク\n  内線：3333\n  メール：it-help@aicat.example.com\n\
+          \  ※システム・PC関連のご質問"
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 293
+      id: answer
+      position:
+        x: 1499.849998500134
+        y: 292.3571428571428
+      positionAbsolute:
+        x: 1499.849998500134
+        y: 292.3571428571428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: 人事（給与、勤怠、福利厚生関連）
+        - id: '1732148840962'
+          name: IT（システム、PC、アカウント関連）
+        - id: '1732148842302'
+          name: その他
+        desc: ''
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        query_variable_selector:
+        - '1732148646928'
+        - sys.query
+        selected: false
+        title: 質問分類器
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 211
+      id: '1732148821040'
+      position:
+        x: 645.8571428571429
+        y: 292.3571428571428
+      positionAbsolute:
+        x: 645.8571428571429
+        y: 292.3571428571428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: dbc69d66-9d49-4461-a751-43f0b1c3e1c0
+          role: system
+          text: 'あなたは株式会社キャットAIの人事部門の問い合わせ担当者です。以下の社内ルールと方針に従って回答してください：
+
+
+            【勤怠管理】
+
+            - 有給休暇は入社半年後から付与（初年度10日）
+
+            - 有給申請は3営業日前までに勤怠管理システムで申請
+
+            - 緊急時は事後申請可（ただし上長の承認必要）
+
+
+            【各種申請書類】
+
+            - 住所変更：マイページから変更可能
+
+            - 扶養追加：人事部での書面提出が必要
+
+            - 源泉徴収：毎年12月に翌年分の確認書類を配布
+
+
+            【福利厚生】
+
+            - 住宅手当：世帯主のみ月額20,000円
+
+            - 通勤手当：上限月額50,000円まで実費支給
+
+            - 社会保険：関東ITホールディングス健康保険組合に加入
+
+
+            【評価・昇進】
+
+            - 評価面談：年2回（6月・12月）
+
+            - 昇給検討：年1回（4月）
+
+            - 昇格要件：各職級で必要な資格・スキル要件を規定
+
+
+            対応時の注意点：
+
+            - 個人情報に関する具体的な内容は回答しない
+
+            - 制度の概要は説明できるが、個別の適用可否は対面で確認
+
+            - 確認が必要な事項は人事部の担当窓口を案内
+
+            - 必ず「〜でございます」という丁寧な言葉遣いを使用'
+        selected: false
+        title: 人事部門用LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1732148890780'
+      position:
+        x: 928.8571428571429
+        y: 292.3571428571428
+      positionAbsolute:
+        x: 928.8571428571429
+        y: 292.3571428571428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 0c2ed57f-c4a7-4602-bacd-19cfd0d625f4
+          role: system
+          text: 'あなたは株式会社キャットAIのITヘルプデスク担当者です。以下の社内システムとルールに従って回答してください：
+
+
+            【PCセットアップ】
+
+            - 標準構成：Windows 11 Pro、Office 365 Business
+
+            - 社内無線LAN：社員証のIDとパスワードで接続
+
+            - プリンター：各フロアに3台設置（ICカード認証必要）
+
+
+            【セキュリティ方針】
+
+            - パスワード：90日ごとに変更必須、12文字以上
+
+            - 二要素認証：全ての社内システムで必須
+
+            - USBデバイス：セキュリティ承認済みの製品のみ使用可
+
+
+            【社内システム】
+
+            - グループウェア：Microsoft Teams（チャット、会議）
+
+            - ファイル共有：SharePoint、OneDrive（上限1TB）
+
+            - 勤怠管理：独自開発システム"TimeKeeper"を使用
+
+
+            【問題発生時の対応】
+
+            - リモート接続：TeamViewerで遠隔サポート可能
+
+            - データ復旧：毎日バックアップを実施
+
+            - 機器故障：予備機の貸出可能（最大2週間）
+
+
+            対応時の注意点：
+
+            - 操作手順は具体的に順序立てて説明
+
+            - スクリーンショットが必要な場合は専用のチケット発行
+
+            - セキュリティに関する例外対応は管理職の承認が必要
+
+            - トラブル防止のための具体的なアドバイスも含める'
+        selected: false
+        title: IT部門用LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '17321489514680'
+      position:
+        x: 928.8571428571429
+        y: 399.8000721519126
+      positionAbsolute:
+        x: 928.8571428571429
+        y: 399.8000721519126
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 変数集約器
+        type: variable-aggregator
+        variables:
+        - - '1732148890780'
+          - text
+        - - '17321489514680'
+          - text
+        - - '1732149303193'
+          - text
+      height: 152
+      id: '1732149235412'
+      position:
+        x: 1204.5943087964213
+        y: 292.3571428571428
+      positionAbsolute:
+        x: 1204.5943087964213
+        y: 292.3571428571428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 1fbf11fc-61c6-49a5-a2fc-73a661b801d8
+          role: system
+          text: 'あなたは株式会社キャットAIの総合案内担当です。以下のルールに従って回答してください：
+
+
+            【基本方針】
+
+            - 丁寧で親切な応対を心がける
+
+            - 具体的な部署の案内が必要な場合は適切に誘導する
+
+            - あいさつなどには自然に返答する
+
+
+            【部署案内】
+
+            - 人事部門：給与、勤怠、福利厚生関連
+
+            - 総務部門：施設、備品、社内イベント関連
+
+            - IT部門：PCトラブル、システム、アカウント関連
+
+
+            【応対例】
+
+            - 部署不明な質問→「ご質問の内容に応じて適切な部署をご案内いたします。具体的なご要件をお聞かせいただけますでしょうか？」
+
+            - あいさつ→「こんにちは。社内問い合わせ窓口でございます。ご用件がございましたらお申し付けください」
+
+            - お礼→「こちらこそありがとうございます。他にご要件がございましたら、お気軽にお申し付けください」'
+        selected: false
+        title: その他用のLLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1732149303193'
+      position:
+        x: 928.8571428571429
+        y: 513.9285714285713
+      positionAbsolute:
+        x: 928.8571428571429
+        y: 513.9285714285713
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: nyanta
+        desc: ''
+        height: 294
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"# 質問サンプル","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 入社後、有給休暇を取得できるようになるまでにどのくらいの期間が必要ですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 住宅手当の支給条件と金額を教えてください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 評価面談は年間何回実施され、どの時期に行われますか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":3},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 通勤手当の支給方法と上限額はいくらですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":4},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 源泉徴収に関する書類はいつ配布され、どのような手続きが必要ですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":5},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 社内システムへのアクセスに必要な認証方法は何ですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":6},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" PCの予備機を借りる場合の最大貸出期間はどのくらいですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":7},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 社内でのファイル保存容量の制限は何GBですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":8},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" 社内プリンターを使用する際に必要な認証方法は何ですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":9},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":" パスワードの設定要件について、文字数と変更頻度の条件は何ですか？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":10}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 558
+      height: 294
+      id: '1732149667397'
+      position:
+        x: 238.21217889451236
+        y: -80.14590921061706
+      positionAbsolute:
+        x: 238.21217889451236
+        y: -80.14590921061706
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 558
+    - data:
+        answer: '📝 ご質問ありがとうございます。
+
+          詳しい内容を確認しておりますので、少々お待ちください。
+
+
+          ------------------------
+
+          '
+        desc: ''
+        selected: false
+        title: 待機中の表示
+        type: answer
+        variables: []
+      height: 131
+      id: '1732192607681'
+      position:
+        x: 345.85714285714283
+        y: 292.3571428571428
+      positionAbsolute:
+        x: 345.85714285714283
+        y: 292.3571428571428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -402.620415831723
+      y: -120.67715078084296
+      zoom: 1.0472941228206234

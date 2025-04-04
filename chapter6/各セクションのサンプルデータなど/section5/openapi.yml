@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: 請求書データ登録 API
+  description: Google Apps Script を使用して請求書データをスプレッドシートに登録するAPI
+servers:
+  - url: https://script.google.com/macros/s/(ご自身のdeploy_idを入れてください)/exec
+paths:
+  "":
+    post:
+      operationId: registerInvoice
+      summary: 請求書データの登録
+      description: 請求書データをスプレッドシートに登録します
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceData'
+      responses:
+        '200':
+          description: リクエスト処理完了（成功・エラー共通）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+components:
+  schemas:
+    InvoiceData:
+      type: object
+      properties:
+        請求番号:
+          type: string
+          example: "INV-001"
+        取引先名:
+          type: string
+          example: "テスト株式会社"
+        請求金額:
+          type: string
+          example: "100000"
+        支払期限:
+          type: string
+          example: "2024-12-31"
+    Response:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: 200=成功、400=エラー
+          example: 200
+        message:
+          type: string
+          example: "Successfully added"

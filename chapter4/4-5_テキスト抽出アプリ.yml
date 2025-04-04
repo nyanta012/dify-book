@@ -1,0 +1,199 @@
+app:
+  description: 画像から文字を抽出するアプリの作成方法を解説しています。大規模マルチモーダルモデル(LMM)を使用して、手書きメモや印刷文書の写真をテキストデータに変換できます。Difyのワークフローで簡単に構築でき、高精度な文字認識が可能です。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: テキスト抽出アプリ
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1732668865366-source-1732668891348-target
+      source: '1732668865366'
+      sourceHandle: source
+      target: '1732668891348'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1732668891348-source-1732668986956-target
+      source: '1732668891348'
+      sourceHandle: source
+      target: '1732668986956'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: true
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 書き起こしする画像
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: image
+      height: 89
+      id: '1732668865366'
+      position:
+        x: 30
+        y: 244
+      positionAbsolute:
+        x: 30
+        y: 244
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 6196a75d-4326-41ab-91c7-f7fc2dc8c545
+          role: system
+          text: '与えられた画像は日本語の文書です。
+
+            以下のルールに注意して書き起こしを行ってください。書き起こし以外の文章の出力は不要です。
+
+
+            ### ルール
+
+            1. 原文の改行とレイアウトを維持すること
+
+            2. 判読困難な文字は[?]で示すこと
+
+            3. 複数の解釈が可能な場合は、最も可能性の高い解釈を本文に、代替案を注記として記載すること
+
+            4. 欄外メモは、本文と区別できるように記載すること
+
+
+            ### 出力フォーマット
+
+            - 本文：原文の体裁を維持した文字起こし
+
+            - 注記：判読困難箇所や代替解釈の一覧'
+        - id: 11a2c225-c89f-4431-87ab-698bb8fa2e67
+          role: user
+          text: '{{#1732668865366.image#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1732668865366'
+            - image
+          enabled: false
+      height: 97
+      id: '1732668891348'
+      position:
+        x: 333.73436701904006
+        y: 244
+      positionAbsolute:
+        x: 333.73436701904006
+        y: 244
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732668891348'
+          - text
+          variable: output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1732668986956'
+      position:
+        x: 636
+        y: 244
+      positionAbsolute:
+        x: 636
+        y: 244
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 492.9283501769428
+      y: -56.26584033900406
+      zoom: 1.241507944828467

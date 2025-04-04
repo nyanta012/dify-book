@@ -1,0 +1,597 @@
+app:
+  description: このアプリは、ユーザーの曖昧な質問を適切なクエリに変換してRAG検索を行うシステムです。入力を「AIキャットの商品に関する質問」と「その他」に分類し、商品関連の質問には文脈を考慮したRAG検索を実行。それ以外の質問には一般的な応答を返す仕組みになっています。文脈を理解することで、「これは何？」といった省略された質問にも適切に対応できます。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 文脈を考慮したRAGアプリ
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.11@390c87cc0f17370a70d3b214cd71a8de81fe9d6b52e6a38287acde034138b672
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: question-classifier
+      id: 1732974300170-source-1733101033085-target
+      source: '1732974300170'
+      sourceHandle: source
+      target: '1733101033085'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1733101085133-source-llm-target
+      source: '1733101085133'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1733101033085-1733101075224-1733101137131-target
+      source: '1733101033085'
+      sourceHandle: '1733101075224'
+      target: '1733101137131'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1733101137131-source-1733101160723-target
+      source: '1733101137131'
+      sourceHandle: source
+      target: '1733101160723'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1733101033085-1-1733110842541-target
+      source: '1733101033085'
+      sourceHandle: '1'
+      target: '1733110842541'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1733110842541-source-1733101085133-target
+      source: '1733110842541'
+      sourceHandle: source
+      target: '1733101085133'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1732974300170'
+      position:
+        x: 74.4186282846785
+        y: 287.5
+      positionAbsolute:
+        x: 74.4186282846785
+        y: 287.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1733101085133'
+          - result
+        desc: ''
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 3
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: a5b24fe1-4852-4ca4-8ec2-b67445a9d9ec
+          role: system
+          text: 'あなたはAIキャット社のカスタマーサポート担当者です。
+
+            商品パンフレットとよくある質問集を参照して、丁寧に回答してください。
+
+
+            ### 制約条件
+
+            - 参照情報に記載がある内容のみ回答すること
+
+            - 参照情報に無い内容は「申し訳ございませんが、その点については確認が必要です」と回答すること
+
+            - 商品の機能や仕様は、パンフレットの内容を正確に伝えること
+
+            - よくある質問集に記載がある場合は、その回答内容を基本とすること
+
+            - 専門用語は分かりやすく説明を加えること
+
+            - 価格に関する情報は必ず最新かどうか確認するよう促すこと
+
+
+            ### 参照情報
+
+            {{#context#}}'
+        selected: false
+        title: LLM(RAGで回答)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: llm
+      position:
+        x: 1183.7518663280512
+        y: 287.5
+      positionAbsolute:
+        x: 1183.7518663280512
+        y: 287.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 1456.82027233499
+        y: 287.5
+      positionAbsolute:
+        x: 1456.82027233499
+        y: 287.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: AIキャットの商品に関する質問
+        - id: '1733101075224'
+          name: その他
+        desc: ''
+        instructions: ''
+        memory:
+          query_prompt_template: ''
+          window:
+            enabled: true
+            size: 3
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o-mini
+          provider: langgenius/openai/openai
+        query_variable_selector:
+        - '1732974300170'
+        - sys.query
+        selected: false
+        title: 質問分類器
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 171
+      id: '1733101033085'
+      position:
+        x: 355.71577382806504
+        y: 287.5
+      positionAbsolute:
+        x: 355.71577382806504
+        y: 287.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - b0870adf-70ec-4b51-9bab-842970e9575c
+        - ddf462f8-7ccf-442c-b15f-5a2ee3b24ac1
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: rerank-english-v2.0
+            provider: langgenius/cohere/cohere
+          score_threshold: null
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: text-embedding-3-large
+              embedding_provider_name: langgenius/openai/openai
+              vector_weight: 0.7
+        query_variable_selector:
+        - '1733110842541'
+        - text
+        retrieval_mode: multiple
+        selected: true
+        title: 知識取得
+        type: knowledge-retrieval
+      height: 53
+      id: '1733101085133'
+      position:
+        x: 916.855651198674
+        y: 287.5
+      positionAbsolute:
+        x: 916.855651198674
+        y: 287.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o-mini
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 785c1b2e-a2ce-4648-a19b-a9cf423f47d8
+          role: system
+          text: 'あなたはAIキャット社のAIアシスタントです。
+
+            ユーザーの入力がAIキャット社に関連するかどうかを判断し、適切に対応してください。
+
+
+            ### 応答方針
+
+            1. AIキャット社に関係のない質問や要求：
+
+            - 丁寧に回答を控える旨を説明
+
+            - AIキャット社の製品やサービスについての質問を促す
+
+
+            2. AIキャット社に関連する質問：
+
+            - 以下の連絡先を案内する
+
+            【お問い合わせ】
+
+            株式会社AIキャット カスタマーサポートセンター
+
+            TEL：0120-XXX-XXX
+
+            受付時間：9:00-18:00（年中無休）
+
+            メール：support-example@ai.cat
+
+
+            ### 制約条件
+
+            - AIキャット社の具体的な商品情報には言及しないこと
+
+            - 違法行為や不適切な要求は毅然とした態度で断ること'
+        - id: 355fe652-6491-4d22-a19d-ca4758c44e67
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM(一般的な回答)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1733101137131'
+      position:
+        x: 638
+        y: 438
+      positionAbsolute:
+        x: 638
+        y: 438
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1733101137131.text#}}'
+        desc: ''
+        selected: false
+        title: 回答 2
+        type: answer
+        variables: []
+      height: 104
+      id: '1733101160723'
+      position:
+        x: 911.4005005149993
+        y: 438
+      positionAbsolute:
+        x: 911.4005005149993
+        y: 438
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 3
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 856e2071-d9a2-4d86-962c-59170052ad23
+          role: system
+          text: 'あなたはAIキャット社のカスタマーサポートアシスタントです。ユーザーの質問をより適切な検索クエリに変換してください。
+
+
+            ### 検索クエリ生成の際の注意点
+
+            1. 会話の文脈を考慮し、これまでの質問や回答も踏まえる
+
+            2. 具体的な商品名やキーワードは保持する
+
+            3. 質問の本質的な意図を反映させる
+
+            4. 一般的な挨拶や不要な表現は除去する
+
+            5. できるだけ自然な質問文として表現する
+
+
+            ### クエリ生成のルール
+
+            - 商品名は正確に記載する（例：PetAI Guardian）
+
+            - 同義語や関連する用語は含める
+
+            - 文脈から推測される重要な情報は補完する
+
+            - 検索の意図が明確になる表現を使用する
+
+
+            クエリのみを出力し、理由や説明は付けないでください。'
+        selected: false
+        title: LLM(クエリ変換)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1733110842541'
+      position:
+        x: 638
+        y: 287.5
+      positionAbsolute:
+        x: 638
+        y: 287.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: nyanta
+        desc: ''
+        height: 294
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"動かすには","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"ナレッジの追加設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"が必要です！","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"AIキャット商品パンフレット.txt","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"AIキャットよくある質問集.txt","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"をナレッジとして作成したものを追加して、全体の検索設定は「ウェイト設定」にしてください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ナレッジをノードに追加した際に検索設定で「ウェイト設定」が選べない場合(バグ？)は","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"それぞれのナレッジの編集(鉛筆マーク)を選択して、保存を押してから「検索設定」を押すと選択できるようになります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 533
+      height: 294
+      id: '1743124527495'
+      position:
+        x: 911.4005005149993
+        y: -37.15331488340557
+      positionAbsolute:
+        x: 911.4005005149993
+        y: -37.15331488340557
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 533
+    - data:
+        author: nyanta
+        desc: ''
+        height: 200
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"書籍のように上手く回答できない場合は、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"追加したナレッジの検索設定を","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"「「ハイブリッド検索」もしくは「ベクトル検索」になっている","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ことを確認してみてください⚠️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"(前のセクションのままで全文検索の設定だと精度が出ない場合があります)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ノードの設定の「AIキャット商品パンフレット」の","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ナレッジ編集(鉛筆マーク)から、検索設定を変更できます！","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 506
+      height: 200
+      id: '1743126866124'
+      position:
+        x: 1183.7518663280512
+        y: 438
+      positionAbsolute:
+        x: 1183.7518663280512
+        y: 438
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 506
+    - data:
+        author: nyanta
+        desc: ''
+        height: 293
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"自分で作る際は","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"LLMノードのユーザープロンプトにsys.queryを設定する","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ことを忘れがちなので注意してください⚠️","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"現在の仕様では、","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"メモリ機能をONにすると、sys.queryはUSER欄に自動設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"されます。","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"メモリ機能をONにしない場合は、自分でLLMノードに設定しないと質問内容が言語モデルに伝わらず","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"応答が得られませんのでご注意ください！","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"また「LLMノード」だけでなく、「質問分類器ノード」においても「高度な設定」から","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"メモリの設定をしないと過去の会話内容に基づいた分類が行えないのでご注意ください。","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ウィンドウサイズは、多い方が精度が上がりますが、コストも上がるため","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"3~5あたりで精度を確認しながら増やしてみるのが良いかと思います🙌","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 641
+      height: 293
+      id: '1743127418312'
+      position:
+        x: 237.29071729163638
+        y: -37.15331488340557
+      positionAbsolute:
+        x: 237.29071729163638
+        y: -37.15331488340557
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 641
+    viewport:
+      x: -314.3553553482802
+      y: 108.21650179782182
+      zoom: 0.8705505632961241

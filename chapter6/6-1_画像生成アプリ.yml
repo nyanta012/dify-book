@@ -1,0 +1,371 @@
+app:
+  description: このアプリはテキストから画像を生成する機能を持つシンプルなチャットアプリです。OpenAIのDALL-E 3という画像生成AIを利用しており、ユーザーが入力したテキストの説明に基づいて高品質な画像を自動生成します。アプリの構成は開始ノード、DALL-Eツール、回答ノードという3つのノードからなる単純な構造で、DALL-Eツールの利用にはOpenAIのAPIキーが必要です。画像の品質やサイズは設定で調整可能で、企業ロゴやイラストなど様々な用途に活用できます。ただし、APIの利用には料金が発生するのでご注意ください。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 画像生成アプリ
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/dalle:0.0.3@44f7ba07c0bcc598cade44d22aec0344573e19014bd3215a2f67077c9abd6c1c
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1733277244361-source-1739295234225-target
+      source: '1733277244361'
+      sourceHandle: source
+      target: '1739295234225'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1739295234225-source-answer-target
+      source: '1739295234225'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1733277244361'
+      position:
+        x: 30
+        y: 283.5
+      positionAbsolute:
+        x: 30
+        y: 283.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739295234225.files#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 638
+        y: 283.5
+      positionAbsolute:
+        x: 638
+        y: 283.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Image prompt, you can check the official documentation of DallE
+              3
+            ja_JP: Image prompt, you can check the official documentation of DallE
+              3
+            pt_BR: Image prompt, you can check the official documentation of DallE
+              3
+            zh_Hans: 图像提示词，您可以查看 DallE 3 的官方文档
+          label:
+            en_US: Prompt
+            ja_JP: Prompt
+            pt_BR: Prompt
+            zh_Hans: 提示词
+          llm_description: Image prompt of DallE 3, you should describe the image
+            you want to generate as a list of words as possible as detailed
+          max: null
+          min: null
+          name: prompt
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: square
+          form: form
+          human_description:
+            en_US: selecting the image size
+            ja_JP: selecting the image size
+            pt_BR: selecting the image size
+            zh_Hans: 选择图像大小
+          label:
+            en_US: Image size
+            ja_JP: Image size
+            pt_BR: Image size
+            zh_Hans: 图像大小
+          llm_description: ''
+          max: null
+          min: null
+          name: size
+          options:
+          - label:
+              en_US: Squre(1024x1024)
+              ja_JP: Squre(1024x1024)
+              pt_BR: Squre(1024x1024)
+              zh_Hans: 方(1024x1024)
+            value: square
+          - label:
+              en_US: Vertical(1024x1792)
+              ja_JP: Vertical(1024x1792)
+              pt_BR: Vertical(1024x1792)
+              zh_Hans: 竖屏(1024x1792)
+            value: vertical
+          - label:
+              en_US: Horizontal(1792x1024)
+              ja_JP: Horizontal(1792x1024)
+              pt_BR: Horizontal(1792x1024)
+              zh_Hans: 横屏(1792x1024)
+            value: horizontal
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 1
+          form: form
+          human_description:
+            en_US: selecting the number of images
+            ja_JP: selecting the number of images
+            pt_BR: selecting the number of images
+            zh_Hans: 选择图像数量
+          label:
+            en_US: Number of images
+            ja_JP: Number of images
+            pt_BR: Number of images
+            zh_Hans: 图像数量
+          llm_description: ''
+          max: 1
+          min: 1
+          name: n
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: standard
+          form: form
+          human_description:
+            en_US: selecting the image quality
+            ja_JP: selecting the image quality
+            pt_BR: selecting the image quality
+            zh_Hans: 选择图像质量
+          label:
+            en_US: Image quality
+            ja_JP: Image quality
+            pt_BR: Image quality
+            zh_Hans: 图像质量
+          llm_description: ''
+          max: null
+          min: null
+          name: quality
+          options:
+          - label:
+              en_US: Standard
+              ja_JP: Standard
+              pt_BR: Standard
+              zh_Hans: 标准
+            value: standard
+          - label:
+              en_US: HD
+              ja_JP: HD
+              pt_BR: HD
+              zh_Hans: 高清
+            value: hd
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: vivid
+          form: form
+          human_description:
+            en_US: selecting the image style
+            ja_JP: selecting the image style
+            pt_BR: selecting the image style
+            zh_Hans: 选择图像风格
+          label:
+            en_US: Image style
+            ja_JP: Image style
+            pt_BR: Image style
+            zh_Hans: 图像风格
+          llm_description: ''
+          max: null
+          min: null
+          name: style
+          options:
+          - label:
+              en_US: Vivid
+              ja_JP: Vivid
+              pt_BR: Vivid
+              zh_Hans: 生动
+            value: vivid
+          - label:
+              en_US: Natural
+              ja_JP: Natural
+              pt_BR: Natural
+              zh_Hans: 自然
+            value: natural
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        params:
+          n: ''
+          prompt: ''
+          quality: ''
+          size: ''
+          style: ''
+        provider_id: langgenius/dalle/dalle
+        provider_name: langgenius/dalle/dalle
+        provider_type: builtin
+        selected: false
+        title: DALL-E 3
+        tool_configurations:
+          n: 1
+          quality: standard
+          size: square
+          style: vivid
+        tool_label: DALL-E 3
+        tool_name: dalle3
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 167
+      id: '1739295234225'
+      position:
+        x: 334
+        y: 283.5
+      positionAbsolute:
+        x: 334
+        y: 283.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: nyanta
+        desc: ''
+        height: 181
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"アプリを動作させるには","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"DALL-E3の認証設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"右上の「ツール」から、DALL-Eの認証設定(OpenAIのAPIキーの設定)を済ませることで","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"画像生成が行えるようになります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"OpenAIのAPIキーを忘れた場合は、書籍の2.4節 51Pをご参照ください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"https://platform.openai.com/api-keys","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 505
+      height: 181
+      id: '1743334473479'
+      position:
+        x: 334
+        y: 69.64823439613404
+      positionAbsolute:
+        x: 334
+        y: 69.64823439613404
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 505
+    viewport:
+      x: 87.55298464529778
+      y: 75.49168862216419
+      zoom: 1.1111807363777393

@@ -1,0 +1,404 @@
+app:
+  description: このアプリは、PDFファイルの内容を自動的に要約してくれるツールです。一般的なQAアプリと異なり、ユーザーが質問を考える必要がありません。2段階の要約プロセスを採用しており、最初に全体の簡潔な要約を作成し、次に専門家と一般人の対話形式で詳しい解説を生成します。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 文書要約アプリ
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.14@8a331ba0572f889222b76d6a26f718264841e74c849b60f9542963483c5dec99
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1732369428668-source-1732369451922-target
+      source: '1732369428668'
+      sourceHandle: source
+      target: '1732369451922'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1732369451922-source-1732370148682-target
+      source: '1732369451922'
+      sourceHandle: source
+      target: '1732370148682'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1732369451922-source-1732369457236-target
+      source: '1732369451922'
+      sourceHandle: source
+      target: '1732369457236'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1732370148682-source-1732409184609-target
+      source: '1732370148682'
+      sourceHandle: source
+      target: '1732409184609'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1732409184609-source-1732369462916-target
+      source: '1732409184609'
+      sourceHandle: source
+      target: '1732369462916'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1732369457236-source-1732409184609-target
+      source: '1732369457236'
+      sourceHandle: source
+      target: '1732409184609'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 要約ファイル
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: file
+      height: 89
+      id: '1732369428668'
+      position:
+        x: 73.42175783375046
+        y: 249
+      positionAbsolute:
+        x: 73.42175783375046
+        y: 249
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: テキスト抽出ツール
+        type: document-extractor
+        variable_selector:
+        - '1732369428668'
+        - file
+      height: 91
+      id: '1732369451922'
+      position:
+        x: 359.3284317348366
+        y: 249
+      positionAbsolute:
+        x: 359.3284317348366
+        y: 249
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 4c60762a-7825-4cc3-b308-0e64c638d912
+          role: system
+          text: 'あなたは経験豊富な専門家と、知識欲旺盛な素人の両方の役割を演じてください。
+
+
+            ### 会話の設定
+
+            専門家：その分野を完全に理解している
+
+            素人：専門外のため基礎知識が無い
+
+
+            ### 会話の要件
+
+            1. 専門家の説明：
+
+            - 専門用語を使用する場合は、必ず素人が理解できるように説明する
+
+            - 具体例や身近な例えを活用する
+
+            - 説明はわかりやすく簡潔にする
+
+
+            2. 素人の質問：
+
+            - 完全に理解するまで質問を続ける
+
+            - 専門家の説明で素人がわからない場合は追加で質問する
+
+
+            3. 会話の進行：
+
+            - 最初は素人の質問からスタート
+
+            - 素人が完全に理解するまで会話を繰り返す
+
+            - 最低でも10回以上会話ターンを行う
+
+
+            ### 要約する文書
+
+            {{#1732369451922.text#}}'
+        selected: false
+        title: 要約LLM_2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1732369457236'
+      position:
+        x: 638
+        y: 371.4816881778292
+      positionAbsolute:
+        x: 638
+        y: 371.4816881778292
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732409184609'
+          - output
+          variable: output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1732369462916'
+      position:
+        x: 1206.0128717912796
+        y: 249
+      positionAbsolute:
+        x: 1206.0128717912796
+        y: 249
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: d914d72b-b139-4d95-8b8b-dbb3b373ad77
+          role: system
+          text: 'あなたは優秀な文書要約スペシャリストとして、以下の要件で文書を要約してください。
+
+
+            ### 要件
+
+            - 要約の長さ：500文字以内
+
+            - 文体：簡潔で分かりやすい日本語
+
+            - フォーマット：段落分けを適切に行う
+
+
+            ### 注意点
+
+            - 背景や経緯から結論までの流れを保持
+
+            - 重要な議論や検討過程を含める
+
+            - 時系列に沿って整理する
+
+
+            ### 要約する文書
+
+            {{#1732369451922.text#}}'
+        selected: false
+        title: 要約LLM_1
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1732370148682'
+      position:
+        x: 638
+        y: 249
+      positionAbsolute:
+        x: 638
+        y: 249
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "\U0001F4C4 ファイル: {{ file_name }}\r\n───────────────────────────\r\
+          \n\r\n\U0001F4DD 全体要約\r\n───────────────────────────\r\n{{ llm_output_1\
+          \ }}\r\n\r\n\U0001F4AD 会話形式\r\n───────────────────────────\r\n{{ llm_output_2\
+          \ }}\r\n\r\n═══════════════════════════\r\n"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1732369428668'
+          - file
+          - name
+          variable: file_name
+        - value_selector:
+          - '1732370148682'
+          - text
+          variable: llm_output_1
+        - value_selector:
+          - '1732369457236'
+          - text
+          variable: llm_output_2
+      height: 53
+      id: '1732409184609'
+      position:
+        x: 923.339340169264
+        y: 249
+      positionAbsolute:
+        x: 923.339340169264
+        y: 249
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: nyanta
+        desc: ''
+        height: 139
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"余談ですが、私はよくChatGPT/Claudeを使う時にも、文章を貼り付けて","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"「上記について素人と専門家の対話形式で素人が完全に理解できるように対話をしてください」などと入力しています。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"次々と質問を生成してくれるので理解が非常に早くなります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"興味があれば、普段言語モデルを利用する際にも試してみてください🙆‍♂️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 690
+      height: 139
+      id: '1743255296951'
+      position:
+        x: 642.7027114033763
+        y: 491.13568843887884
+      positionAbsolute:
+        x: 642.7027114033763
+        y: 491.13568843887884
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 690
+    viewport:
+      x: -41.78969529058918
+      y: -116.80760814467828
+      zoom: 1.1214978286254709

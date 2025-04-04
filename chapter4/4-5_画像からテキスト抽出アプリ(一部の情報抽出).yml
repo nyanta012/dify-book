@@ -1,0 +1,291 @@
+app:
+  description: Difyで作成できる画像からテキストを抽出するアプリの説明です。マルチモーダルモデル(LMM)を使用して、手書きメモや印刷文書の画像からテキストを高精度で抽出できます。プロンプトの調整により、文書全体の書き起こしや、請求書など特定の情報のみを抽出することも可能です。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 画像からテキスト抽出アプリ(一部の情報抽出)
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1732668865366-source-1732668891348-target
+      source: '1732668865366'
+      sourceHandle: source
+      target: '1732668891348'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1732695627522-source-1732668986956-target
+      source: '1732695627522'
+      sourceHandle: source
+      target: '1732668986956'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: tool
+      id: 1732668891348-source-1732695640260-target
+      source: '1732668891348'
+      sourceHandle: source
+      target: '1732695640260'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1732695640260-source-1732695627522-target
+      source: '1732695640260'
+      sourceHandle: source
+      target: '1732695627522'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: image
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: image
+      height: 89
+      id: '1732668865366'
+      position:
+        x: 79.43138132870143
+        y: 257.5
+      positionAbsolute:
+        x: 79.43138132870143
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 6196a75d-4326-41ab-91c7-f7fc2dc8c545
+          role: system
+          text: '与えられた画像は請求書です。以下の情報のみを抽出してJSON形式で出力してください。それ以外の出力は不要です。
+
+
+            ### 事前情報
+
+            私は株式会社AIキャットの社員です。取引先名を抽出する際はそれを踏まえてください。
+
+
+            ### 必要な情報
+
+            - 請求番号
+
+            - 取引先名
+
+            - 請求金額（税込）
+
+            - 支払期限
+
+
+            ### 出力フォーマット
+
+            不明な場合は適当な値を出力せず不明と出力してください。
+
+            {
+
+              "請求番号": "",
+
+              "取引先名": "",
+
+              "請求金額": "",
+
+              "支払期限": ""
+
+            }'
+        - id: 88ddbab7-5a1c-4623-ac3c-b33943a3f041
+          role: user
+          text: '### 画像
+
+            {{#1732668865366.image#}}'
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1732668865366'
+            - image
+          enabled: false
+      height: 97
+      id: '1732668891348'
+      position:
+        x: 360.08878459014795
+        y: 257.5
+      positionAbsolute:
+        x: 360.08878459014795
+        y: 257.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732695627522'
+          - output
+          variable: output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1732668986956'
+      position:
+        x: 1179.9580638877612
+        y: 257.5
+      positionAbsolute:
+        x: 1179.9580638877612
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: "### 文書情報\r\n書き起こし日時：{{current_time}}\r\n\r\n---\r\n\r\n{{text}}"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1732695640260'
+          - text
+          variable: current_time
+        - value_selector:
+          - '1732668891348'
+          - text
+          variable: text
+      height: 53
+      id: '1732695627522'
+      position:
+        x: 909.0148925347319
+        y: 257.5
+      positionAbsolute:
+        x: 909.0148925347319
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        provider_id: time
+        provider_name: time
+        provider_type: builtin
+        selected: false
+        title: Current Time
+        tool_configurations:
+          format: '%Y-%m-%d %H:%M:%S'
+          timezone: Asia/Tokyo
+        tool_label: Current Time
+        tool_name: current_time
+        tool_parameters: {}
+        type: tool
+      height: 115
+      id: '1732695640260'
+      position:
+        x: 637.0759763103836
+        y: 257.5
+      positionAbsolute:
+        x: 637.0759763103836
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: -135.31217109233648
+      y: -82.00914988253481
+      zoom: 1.3725468539156784

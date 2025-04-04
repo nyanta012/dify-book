@@ -1,0 +1,228 @@
+app:
+  description: ビジネス文書の校正を自動化するアプリです。文書の構成、文体の一貫性、敬語の使用、誤字脱字などを分析し、改善案を提示します。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: AI文書校正アシスタント
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.15@5f610705111ac49d93c4ea5eaac690abaeb3b4a87599c48e5165b549b4c47f10
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1731821021406-source-1731821246278-target
+      source: '1731821021406'
+      sourceHandle: source
+      target: '1731821246278'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1731821246278-source-1731821395952-target
+      source: '1731821246278'
+      sourceHandle: source
+      target: '1731821395952'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: 校正したい文書を入力してください
+          max_length: 100000
+          options: []
+          required: true
+          type: paragraph
+          variable: input_text
+      height: 89
+      id: '1731821021406'
+      position:
+        x: 28.626906074202736
+        y: 248.5
+      positionAbsolute:
+        x: 28.626906074202736
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 0f06441c-b8e2-4a29-8732-4bc240a20480
+          role: system
+          text: "あなたはビジネス文書の校正と改善を行う専門家です。\n入力された文書に対して以下の観点で分析と改善を行ってください：\n\n1.\
+            \ 文書構成の適切性\n   - 文書の種類に応じた必要な要素が含まれているか\n   - 内容の順序や段落の区切りは適切か\n   - 箇条書きなどの書式は統一されているか\n\
+            \n2. 文体の一貫性\n   - 文末表現は統一されているか\n   - 敬語の使い方は適切か\n   - 全体的な文体は一貫しているか\n\
+            \n3. ビジネス文書としての表現の適切さ\n   - 適切な敬語や丁寧な表現が使われているか\n   - 口語的な表現や不適切な言い回しはないか\n\
+            \   - 曖昧な表現や不適切な省略はないか\n\n4. 誤字脱字や文法の問題\n   - 漢字やひらがなの使い分けは適切か\n   - 同じ言葉の表記は統一されているか\n\
+            \   - 句読点の使い方は適切か\n\n5. 分かりやすさ、簡潔さ\n   - 文章の流れは分かりやすいか\n   - 不必要な重複や冗長な表現はないか\n\
+            \   - 重要なポイントは明確に伝わるか\n\n### 現在の文書\n{{#1731821021406.input_text#}}\n\n\
+            ### 分析\n上記の各観点について、問題点を箇条書きで示します。\n\n### 改善案\n問題点を修正した文書を示します。\n\n###\
+            \ 解説\n主な修正のポイントについて説明します。"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1731821246278'
+      position:
+        x: 333.3781781690742
+        y: 248.5
+      positionAbsolute:
+        x: 333.3781781690742
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1731821246278'
+          - text
+          variable: llm_output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1731821395952'
+      position:
+        x: 626.7922913272778
+        y: 248.5
+      positionAbsolute:
+        x: 626.7922913272778
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: nyanta
+        desc: ''
+        height: 284
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"#
+          校正前の文書 ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"4月15日の会議内容の報告","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"先日行われた会議では、第1四半期の売り上げに関して話し合いを実施しました","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"売上は前年対比で120％と、とても良い結果となりまして、新規のお客様からの注文が増えている状況です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"但し、関西エリアでの売り上げが目標を下まわっており、これが課題であります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"対応策としまして下記の対策を実施する予定でございます","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"・営業メンバーを増やす","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"・新しいキャンペーンを行なう","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"・既存客のフォローを強化する事","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"上記施策を通じ、売上げの向上を目指して参りたいと思います。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"宜しくお願い致します","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 388
+      height: 284
+      id: '1731821433729'
+      position:
+        x: 36.702440330448894
+        y: -86.35404034207433
+      positionAbsolute:
+        x: 36.702440330448894
+        y: -86.35404034207433
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 388
+    - data:
+        author: nyanta
+        desc: ''
+        height: 279
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"#
+          校正前の文書の問題点","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"文書構成の適切性","type":"text","version":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"宛名や差出人がない","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"段落の区切りが不適切","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"箇条書きの形式が統一されていない","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":3},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"日付の表記が不完全","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":4}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"文体の一貫性","type":"text","version":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「実施しました」「となりまして」「であります」など文末表現が不統一","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「です・ます」調と「であります」調の混在","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「思います」という個人的な表現の使用","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":3}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"ビジネス文書としての表現の適切さ","type":"text","version":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「とても良い」という口語的な表現","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「新規のお客様」と「既存客」で敬称が不統一","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「目指して参りたいと思います」という意思が不明確な表現","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":3}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":3},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"誤字脱字や文法の問題","type":"text","version":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「売り上げ」「売上」「売上げ」の表記揺れ","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「下まわる」（正：下回る）","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「行なう」（正：行う）","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":3},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「事」（正：こと）","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":4},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"句点の欠落","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":5}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":4},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"分かりやすさ、簡潔さ","type":"text","version":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"「関西エリアでの売り上げが目標を下まわっており」の後の具体的な数値がない","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"実施予定の対策に優先順位や実施時期が不明確","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"箇条書きの表現が不統一","type":"text","version":1}],"direction":"ltr","format":"","indent":1,"type":"listitem","version":1,"value":3}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":5}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: pink
+        title: ''
+        type: ''
+        width: 443
+      height: 279
+      id: '1731821741798'
+      position:
+        x: 468.3748586430326
+        y: -86.35404034207433
+      positionAbsolute:
+        x: 468.3748586430326
+        y: -86.35404034207433
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 443
+    viewport:
+      x: 430.61069380516767
+      y: 222.71319711417937
+      zoom: 0.728282298255283

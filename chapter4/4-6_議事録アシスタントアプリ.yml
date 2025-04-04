@@ -1,0 +1,427 @@
+app:
+  description: 音声ファイルから自動で議事録を作成し、会議内容に関する質問に回答できるAIアプリケーションです。OpenAIのWhisperモデルで音声を文字起こしし、その内容をもとに議事録を作成。さらに、会議の内容について質問すると、AIが文脈を理解して回答してくれます。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 議事録アシスタントアプリ
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables:
+  - description: 文字起こしの内容を保存する変数
+    id: d838c2c1-2379-4c3a-b5ce-ca584781de58
+    name: transcription
+    selector:
+    - conversation
+    - transcription
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '議事録アシスタントです🤖
+
+      最初に議事録を作成してください。'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 議事録を作成する
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1732786717260-source-1732786725438-target
+      selected: false
+      source: '1732786717260'
+      sourceHandle: source
+      target: '1732786725438'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1732786725438-true-1732786770540-target
+      selected: false
+      source: '1732786725438'
+      sourceHandle: 'true'
+      target: '1732786770540'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: assigner
+      id: 1732786770540-source-1732786870269-target
+      selected: false
+      source: '1732786770540'
+      sourceHandle: source
+      target: '1732786870269'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: llm
+      id: 1732786870269-source-1732787478347-target
+      selected: false
+      source: '1732786870269'
+      sourceHandle: source
+      target: '1732787478347'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1732787478347-source-1732786880439-target
+      selected: false
+      source: '1732787478347'
+      sourceHandle: source
+      target: '1732786880439'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1732786725438-false-1732787123137-target
+      selected: false
+      source: '1732786725438'
+      sourceHandle: 'false'
+      target: '1732787123137'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1732787123137-source-1732787208678-target
+      selected: false
+      source: '1732787123137'
+      sourceHandle: source
+      target: '1732787208678'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - audio
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 音声ファイル
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: audio
+      height: 90
+      id: '1732786717260'
+      position:
+        x: 30
+        y: 298.5
+      positionAbsolute:
+        x: 30
+        y: 298.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: 8b4bd584-c2e8-410a-b69c-5dba92101cef
+            value: '0'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 126
+      id: '1732786725438'
+      position:
+        x: 334
+        y: 298.5
+      positionAbsolute:
+        x: 334
+        y: 298.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: audio
+        provider_name: audio
+        provider_type: builtin
+        selected: false
+        title: Speech To Text
+        tool_configurations:
+          model: openai#whisper-1
+        tool_label: Speech To Text
+        tool_name: asr
+        tool_parameters:
+          audio_file:
+            type: variable
+            value:
+            - '1732786717260'
+            - audio
+        type: tool
+      height: 90
+      id: '1732786770540'
+      position:
+        x: 638
+        y: 159.35011065838603
+      positionAbsolute:
+        x: 638
+        y: 159.35011065838603
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - transcription
+        desc: ''
+        input_variable_selector:
+        - '1732786770540'
+        - text
+        selected: false
+        title: 変数代入
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1732786870269'
+      position:
+        x: 915.2214560753798
+        y: 159.35011065838603
+      positionAbsolute:
+        x: 915.2214560753798
+        y: 159.35011065838603
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732787478347.text#}}
+
+
+          ---
+
+
+          💬 議事録作成が完了しました。
+
+
+          以下のような質問や要望を入力してください：
+
+          - 重要なポイントを箇条書きで教えて
+
+          - 次回に向けて課題や宿題は？
+
+
+          ※ 音声データは保存されていますので、何度でも異なる観点から分析できます。'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 198
+      id: '1732786880439'
+      position:
+        x: 1491.7445834251503
+        y: 298.5
+      positionAbsolute:
+        x: 1491.7445834251503
+        y: 298.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 01cab36a-7f27-4bfd-bdcc-f24922572b8a
+          role: system
+          text: 'あなたは音声コンテンツの分析スペシャリストです。与えられた文字起こしデータを元に、ユーザーからの様々な質問や要望に正確に応答してください。
+
+
+            ### 文字起こしデータ
+
+            {{#conversation.transcription#}}
+
+
+            ### 応答の基本方針
+
+            - 常に文字起こしの内容に基づいて回答すること
+
+            - 推測や外部知識による補完は避けること
+
+            - 要約や抽出を行う際は、重要度や関連性を考慮すること
+
+            - 明確な根拠（発言内容の引用など）を含めること
+
+            - 必要に応じて、どの部分の発言かを明示すること'
+        - id: cc98dab0-5ad0-495b-b2d7-12c92c453cd8
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: QA用LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732787123137'
+      position:
+        x: 638
+        y: 428.5
+      positionAbsolute:
+        x: 638
+        y: 428.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732787123137.text#}}'
+        desc: ''
+        selected: true
+        title: 回答 2
+        type: answer
+        variables: []
+      height: 102
+      id: '1732787208678'
+      position:
+        x: 915.2214560753798
+        y: 428.5
+      positionAbsolute:
+        x: 915.2214560753798
+        y: 428.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 90d90554-53de-44e9-9192-610fc2f08fcb
+          role: system
+          text: "あなたは議事録作成のエキスパートです。文字起こしデータから、簡潔で分かりやすい議事録を作成してください。また、不明確な点や補足が必要な情報がある場合は、その旨を議事録に明記してください。\n\
+            \n### 文字起こしデータ\n{{#1732786770540.text#}}\n\n### 議事録作成の基本方針\n- 客観的な事実を正確に記録\n\
+            - 重要な決定事項や合意事項を明確に記載（**太字**で強調）\n- 冗長な表現や余分な情報は省略し、要点を簡潔に記載\n- 時系列に沿って整理\n\
+            - 発言者の意図や文脈を考慮した適切な要約\n- 検討中の事項と決定済みの事項を明確に区別\n- アクションアイテムは具体的な実行内容と期限を明記\n\
+            \n### 出力フォーマット\n\U0001F4C5 開催概要\n- 会議名：\n- 開催日時：\n- 開催形式：\n- 参加者：\n- 司会者：\n\
+            - 書記：\n\n\U0001F4CB 議題一覧\n1. [議題1]\n2. [議題2]\n...\n\n\U0001F4AC 議事内容\n\
+            【議題1】\n- 議論の背景：\n- 主な論点：\n- 意見交換内容：\n- 決定事項：\n- 保留事項：\n\n【議題2】\n[同様のフォーマット]\n\
+            ...\n\n✅ アクションアイテム\n優先度「高」\n- 担当者：[担当者名]\n  - タスク：[具体的な内容]\n  - 期限：[完了期限]\n\
+            \  - 関連部署：[必要に応じて]\n\n優先度「中」「低」\n[同様のフォーマット]\n\n\U0001F4DD 補足・特記事項\n-\
+            \ 次回会議予定：\n- 未解決の課題：\n- その他特記事項：\n\n### 留意事項\n- 不明確な情報や補足が必要な点は、「※」マークを付けて明記\n\
+            - 専門用語は初出時に簡単な説明を追記\n- 機密情報や個人情報は適切な形に置き換えて記載\n- 重要な数値やデータは表形式で整理"
+        selected: false
+        title: 議事録作成LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732787478347'
+      position:
+        x: 1188.3071737630528
+        y: 159.35011065838603
+      positionAbsolute:
+        x: 1188.3071737630528
+        y: 159.35011065838603
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -690.9164073567415
+      y: -43.03588365973491
+      zoom: 1.3367782454745814

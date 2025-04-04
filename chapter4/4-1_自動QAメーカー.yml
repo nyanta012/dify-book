@@ -1,0 +1,319 @@
+app:
+  description: このアプリは、PDFファイルをアップロードすると、その内容から自動的に想定される質問と回答のセット（FAQ）を生成します。生成するFAQの数を指定でき、現在の日付も自動で付与されるため、説明資料やドキュメントの補足資料として活用できます。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 自動QAメーカー
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.14@8a331ba0572f889222b76d6a26f718264841e74c849b60f9542963483c5dec99
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1732197338555-source-1732197388715-target
+      source: '1732197338555'
+      sourceHandle: source
+      target: '1732197388715'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1732197388715-source-1732197688126-target
+      source: '1732197388715'
+      sourceHandle: source
+      target: '1732197688126'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1732197867221-source-1732198213674-target
+      source: '1732197867221'
+      sourceHandle: source
+      target: '1732198213674'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1732197688126-source-1732197867221-target
+      source: '1732197688126'
+      sourceHandle: source
+      target: '1732197867221'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: PDFファイル
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: file
+        - label: 生成する質問数
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: faq_count
+      height: 115
+      id: '1732197338555'
+      position:
+        x: 15.865284226710031
+        y: 257.5
+      positionAbsolute:
+        x: 15.865284226710031
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: テキスト抽出ツール
+        type: document-extractor
+        variable_selector:
+        - '1732197338555'
+        - file
+      height: 91
+      id: '1732197388715'
+      position:
+        x: 311.50140982330583
+        y: 257.5
+      positionAbsolute:
+        x: 311.50140982330583
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 9b755101-c08b-4bb0-9e14-a916b5745e3f
+          role: system
+          text: 'あなたは質問回答集を作成する専門家です。
+
+            以下のテキストを読んで、想定される質問と回答のペアを{{#1732197338555.faq_count#}}個生成してください。
+
+
+            ### 制約条件
+
+            - 質問は実際に読者から出そうな具体的な内容にすること
+
+            - 回答は簡潔で明確であること
+
+            - テキストに書かれている内容に基づいて回答すること
+
+            - 曖昧な表現は避けること
+
+            - 出力形式以外のものは生成しないこと
+
+
+            ### テキスト
+
+            {{#1732197388715.text#}}
+
+
+            ### 出力形式
+
+            Q1: [質問1]
+
+            A1: [回答1]
+
+
+            Q2: [質問2]
+
+            A2: [回答2]
+
+            ...'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1732197688126'
+      position:
+        x: 597.2087352711656
+        y: 257.5
+      positionAbsolute:
+        x: 597.2087352711656
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: "{{llm_output}}\r\n\r\n---\r\n※この質問と回答はAIが自動生成したものです。"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1732197688126'
+          - text
+          variable: llm_output
+      height: 53
+      id: '1732197867221'
+      position:
+        x: 878.936428428319
+        y: 257.5
+      positionAbsolute:
+        x: 878.936428428319
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732197867221'
+          - output
+          variable: output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1732198213674'
+      position:
+        x: 1152.1974220463235
+        y: 257.5
+      positionAbsolute:
+        x: 1152.1974220463235
+        y: 257.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: nyanta
+        desc: ''
+        height: 221
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"サンプルPDFファイルはGitHubにも用意してあります🙆‍♂️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"https://github.com/nyanta012/dify-book/tree/main/chapter4/","type":"text","version":1},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"各セクションのサンプルデータなど","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"link","version":1,"rel":null,"target":null,"title":"各セクションのサンプルデータなど","url":"https://github.com/nyanta012/dify-book/tree/main/chapter4/%E5%90%84%E3%82%BB%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AA%E3%81%A9"},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"/section1","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ご自身のPDFをアップロードしてご利用いただけますが、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"OpenAIにデータが送信されるため、機密情報の取り扱いにはご注意ください⚠️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"また仕組み上、PDF内の","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"すべての文章が","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"言語モデルに送られます。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"そのため、文章量が多い場合は処理コストが増加したり、言語モデルの処理限界を超えるとエラーが発生する可能性がありますのでご留意ください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 845
+      height: 221
+      id: '1743253485843'
+      position:
+        x: 15.865284226710031
+        y: -7.722430004088466
+      positionAbsolute:
+        x: 15.865284226710031
+        y: -7.722430004088466
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 845
+    viewport:
+      x: 264.38895193809685
+      y: 145.82765747020986
+      zoom: 0.8761418381365309

@@ -1,0 +1,375 @@
+app:
+  description: PDFファイルの内容に基づいてQ&Aができるチャットアプリです。アップロードしたPDFの内容を読み込み、ユーザーからの質問に対して適切な回答を生成します。社内規約の確認など、ドキュメントの内容を効率的に把握したい場合に便利なツールです。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: PDF Q&Aアシスタント
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.14@8a331ba0572f889222b76d6a26f718264841e74c849b60f9542963483c5dec99
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: PDF Q&Aアシスタントです🤖
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - まずはこちらを押して注意事項などを読んでください
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1732325719542-source-1732327102387-target
+      source: '1732325719542'
+      sourceHandle: source
+      target: '1732327102387'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1732325816068-source-llm-target
+      source: '1732325816068'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1732327102387-true-1732325816068-target
+      source: '1732327102387'
+      sourceHandle: 'true'
+      target: '1732325816068'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1732327102387-false-1732327111150-target
+      source: '1732327102387'
+      sourceHandle: 'false'
+      target: '1732327111150'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: PDFファイル
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: pdf_file
+      height: 89
+      id: '1732325719542'
+      position:
+        x: 65.10367935709786
+        y: 262.5
+      positionAbsolute:
+        x: 65.10367935709786
+        y: 262.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: d5a813ca-92a6-4aa0-9bea-e782fa1eeb97
+          role: system
+          text: "あなたはPDFドキュメントの内容について質問に答えるアシスタントです。\nユーザーの入力に対して制約事項に従い適切に対応してください。\n\
+            \n### 制約事項\n- PDFの内容に基づいて正確に回答してください\n- PDFに記載されていない内容は「その情報はPDFには記載されていません」と伝えてください\n\
+            - 回答の根拠となる部分があれば、引用を示してください\n- 回答は簡潔かつ分かりやすく構成してください\n\n### PDFの内容\n{{#1732325816068.text#}}\
+            \ \n"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: llm
+      position:
+        x: 913.420753530361
+        y: 262.5
+      positionAbsolute:
+        x: 913.420753530361
+        y: 262.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 1180.1994324499396
+        y: 262.5
+      positionAbsolute:
+        x: 1180.1994324499396
+        y: 262.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: テキスト抽出ツール
+        type: document-extractor
+        variable_selector:
+        - '1732325719542'
+        - pdf_file
+      height: 91
+      id: '1732325816068'
+      position:
+        x: 642.488403383517
+        y: 262.5
+      positionAbsolute:
+        x: 642.488403383517
+        y: 262.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '>'
+            id: 9c848738-fcb3-4bb9-815c-2104ea575ec4
+            value: '0'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 125
+      id: '1732327102387'
+      position:
+        x: 364.5994994850008
+        y: 262.5
+      positionAbsolute:
+        x: 364.5994994850008
+        y: 262.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '<div style="max-width: 800px; margin: 0 auto;">
+
+          <div style="background-color: #f0f9ff; padding: 20px; border-radius: 8px;
+          margin-bottom: 20px;">
+
+          <h3 style="color: #1e40af; margin: 0 0 15px;">📚 PDF Q&Aアシスタント</h3>
+
+          <p style="margin: 0 0 15px; color: #334155;">
+
+          このアプリでは、PDFファイルの内容について自由に質問することができます。
+
+          アップロードされたPDFの内容を理解し、あなたの質問に対して具体的な回答を提供します。
+
+          </p>
+
+
+          <h3 style="color: #1e40af; margin: 0 0 15px;">💡 効果的な質問例</h3>
+
+          <p style="margin: 0 0 15px; color: #334155;">
+
+          ・〇〇について書かれている箇所を教えてください<br>
+
+          ・〇〇という用語の定義について説明してください<br>
+
+          ・このPDFの結論を示してください
+
+          </p>
+
+
+          <h3 style="color: #1e40af; margin: 0 0 15px;">⚠️ 注意点</h3>
+
+          <p style="margin: 0 0 15px; color: #334155;">
+
+          ・PDFに含まれていない情報については回答できません<br>
+
+          ・画像やグラフの詳細な解析はできない場合があります<br>
+
+          ・長大なPDFの場合、処理に時間がかかることがあります<br>
+
+          ・機密情報を含むPDFはアップロードしないでください
+
+          </p>'
+        desc: ''
+        selected: false
+        title: 使い方の説明
+        type: answer
+        variables: []
+      height: 517
+      id: '1732327111150'
+      position:
+        x: 642.488403383517
+        y: 396.99613446117235
+      positionAbsolute:
+        x: 642.488403383517
+        y: 396.99613446117235
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: nyanta
+        desc: ''
+        height: 270
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"4.1に引き続き、PDFファイルの文章を","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"全て言語モデル","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"に入力します。 ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"5章で学ぶRAG手法では文章の一部のみを入力するため、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"5章を学んだ後にこの方法を見ると、コストがかかる力技のように感じるかもしれません。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"しかし実際には、RAGでは","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"文書全体の情報が必要となる質問に対応できない","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ことがあります。 ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"例えば「文書全体の要約を作成してほしい」といった質問には対応が難しいのです。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"そのような場合、質問分類器などで「文書全体を読む必要があるか」などでクラス分けをして","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ここで紹介するように文書全体を読み込ませる方法を行うのも有効な選択肢となるかもしれません。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 580
+      height: 270
+      id: '1743254208691'
+      position:
+        x: 918.9682765486074
+        y: 407.2637076997569
+      positionAbsolute:
+        x: 918.9682765486074
+        y: 407.2637076997569
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 580
+    viewport:
+      x: -217.18715316595853
+      y: -80.50916906904433
+      zoom: 1.1334061394631219

@@ -1,0 +1,640 @@
+app:
+  description: このアプリは、請求書から必要な情報（請求番号、取引先名、請求金額、支払期限）を自動的に抽出し、HTTPリクエストを通じてGoogleスプレッドシートに保存する機能を持っています。DifyとGoogle
+    Apps Scriptを連携させることで、抽出したデータを効率的に管理できます。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 請求書情報記録アプリ
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.4@73a111bc58d4c5386811b0d1ed339f89c6e1a9a033940725f88257fff452ea70
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/json_process:0.0.2@7afb534cc85b28a8e9c7f9410d1cfc31fb7bd3950023355a37059dbe809ac776
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 8694dc2f-1c3c-44f6-9533-6711c53fd73c
+    name: deploy_id
+    selector:
+    - env
+    - deploy_id
+    value: ''
+    value_type: secret
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1732668865366-source-1732668891348-target
+      selected: false
+      source: '1732668865366'
+      sourceHandle: source
+      target: '1732668891348'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1733399788581-source-1732668986956-target
+      selected: false
+      source: '1733399788581'
+      sourceHandle: source
+      target: '1732668986956'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: http-request
+      id: 1732668891348-source-1733386967864-target
+      source: '1732668891348'
+      sourceHandle: source
+      target: '1733386967864'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1739603579128-source-1733399788581-target
+      source: '1739603579128'
+      sourceHandle: source
+      target: '1733399788581'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1739603592068-source-1733399788581-target
+      source: '1739603592068'
+      sourceHandle: source
+      target: '1733399788581'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: tool
+      id: 1733386967864-source-1739603579128-target
+      source: '1733386967864'
+      sourceHandle: source
+      target: '1739603579128'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: tool
+      id: 1733386967864-source-1739603592068-target
+      source: '1733386967864'
+      sourceHandle: source
+      target: '1739603592068'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: image
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: image
+      height: 89
+      id: '1732668865366'
+      position:
+        x: 30
+        y: 268
+      positionAbsolute:
+        x: 30
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            response_format: json_object
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 6196a75d-4326-41ab-91c7-f7fc2dc8c545
+          role: system
+          text: '与えられた画像は請求書です。以下の情報のみを抽出してJSON形式で出力してください。それ以外の出力は不要です。
+
+
+            ### 事前情報
+
+            私は株式会社AIキャットの社員です。取引先名を抽出する際はそれを踏まえてください。
+
+
+            ### 必要な情報
+
+            - 請求番号
+
+            - 取引先名
+
+            - 請求金額（税込）
+
+            - 支払期限
+
+
+            ### 出力フォーマット
+
+            不明な場合は適当な値を出力せず不明と出力してください。
+
+            {
+
+              "請求番号": "",
+
+              "取引先名": "",
+
+              "請求金額": "",
+
+              "支払期限": ""
+
+            }'
+        - id: cc8a0aa2-bc7a-4c62-85af-a0494e929a4d
+          role: user
+          text: '{{#1732668865366.image#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1732668865366'
+            - image
+          enabled: false
+      height: 89
+      id: '1732668891348'
+      position:
+        x: 334
+        y: 268
+      positionAbsolute:
+        x: 334
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1733399788581'
+          - output
+          variable: output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1732668986956'
+      position:
+        x: 1550
+        y: 268
+      positionAbsolute:
+        x: 1550
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: '{{#1732668891348.text#}}'
+          type: raw-text
+        desc: ''
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTPリクエスト
+        type: http-request
+        url: https://script.google.com/macros/s/{{#env.deploy_id#}}/exec
+        variables: []
+      height: 137
+      id: '1733386967864'
+      position:
+        x: 638
+        y: 268
+      positionAbsolute:
+        x: 638
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: JSON data
+            ja_JP: JSON data
+            pt_BR: JSON数据
+            zh_Hans: JSON数据
+          label:
+            en_US: JSON data
+            ja_JP: JSON data
+            pt_BR: JSON data
+            zh_Hans: JSON数据
+          llm_description: JSON data to be processed
+          max: null
+          min: null
+          name: content
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: JSON fields to be parsed
+            ja_JP: JSON fields to be parsed
+            pt_BR: JSON fields to be parsed
+            zh_Hans: 需要解析的 JSON 字段
+          label:
+            en_US: JSON filter
+            ja_JP: JSON filter
+            pt_BR: JSON filter
+            zh_Hans: JSON解析对象
+          llm_description: JSON fields to be parsed
+          max: null
+          min: null
+          name: json_filter
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 1
+          form: form
+          human_description:
+            en_US: Ensure the JSON output is ASCII encoded
+            ja_JP: Ensure the JSON output is ASCII encoded
+            pt_BR: Ensure the JSON output is ASCII encoded
+            zh_Hans: 确保输出的 JSON 是 ASCII 编码
+          label:
+            en_US: Ensure ASCII
+            ja_JP: Ensure ASCII
+            pt_BR: Ensure ASCII
+            zh_Hans: 确保 ASCII
+          llm_description: ''
+          max: null
+          min: null
+          name: ensure_ascii
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        params:
+          content: ''
+          ensure_ascii: ''
+          json_filter: ''
+        provider_id: langgenius/json_process/json_process
+        provider_name: langgenius/json_process/json_process
+        provider_type: builtin
+        selected: false
+        title: JSON Parse (status)
+        tool_configurations:
+          ensure_ascii: 1
+        tool_label: JSON Parse
+        tool_name: parse
+        tool_parameters:
+          content:
+            type: mixed
+            value: '{{#1733386967864.body#}}'
+          json_filter:
+            type: mixed
+            value: status
+        type: tool
+      height: 89
+      id: '1739603579128'
+      position:
+        x: 942
+        y: 268
+      positionAbsolute:
+        x: 942
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "{% if status == \"200\" %}\r\n## 下記のデータに追加しました\r\n{{ llm_output\
+          \ }}\r\n{% else %}\r\n## 下記のエラーが発生しました\r\n{{ message }}\r\n{% endif %}"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1732668891348'
+          - text
+          variable: llm_output
+        - value_selector:
+          - '1739603592068'
+          - text
+          variable: message
+        - value_selector:
+          - '1739603579128'
+          - text
+          variable: status
+      height: 53
+      id: '1733399788581'
+      position:
+        x: 1246
+        y: 268
+      positionAbsolute:
+        x: 1246
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: JSON data
+            ja_JP: JSON data
+            pt_BR: JSON数据
+            zh_Hans: JSON数据
+          label:
+            en_US: JSON data
+            ja_JP: JSON data
+            pt_BR: JSON data
+            zh_Hans: JSON数据
+          llm_description: JSON data to be processed
+          max: null
+          min: null
+          name: content
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: JSON fields to be parsed
+            ja_JP: JSON fields to be parsed
+            pt_BR: JSON fields to be parsed
+            zh_Hans: 需要解析的 JSON 字段
+          label:
+            en_US: JSON filter
+            ja_JP: JSON filter
+            pt_BR: JSON filter
+            zh_Hans: JSON解析对象
+          llm_description: JSON fields to be parsed
+          max: null
+          min: null
+          name: json_filter
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 1
+          form: form
+          human_description:
+            en_US: Ensure the JSON output is ASCII encoded
+            ja_JP: Ensure the JSON output is ASCII encoded
+            pt_BR: Ensure the JSON output is ASCII encoded
+            zh_Hans: 确保输出的 JSON 是 ASCII 编码
+          label:
+            en_US: Ensure ASCII
+            ja_JP: Ensure ASCII
+            pt_BR: Ensure ASCII
+            zh_Hans: 确保 ASCII
+          llm_description: ''
+          max: null
+          min: null
+          name: ensure_ascii
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        params:
+          content: ''
+          ensure_ascii: ''
+          json_filter: ''
+        provider_id: langgenius/json_process/json_process
+        provider_name: langgenius/json_process/json_process
+        provider_type: builtin
+        selected: false
+        title: JSON Parse (message)
+        tool_configurations:
+          ensure_ascii: 1
+        tool_label: JSON Parse
+        tool_name: parse
+        tool_parameters:
+          content:
+            type: mixed
+            value: '{{#1733386967864.body#}}'
+          json_filter:
+            type: mixed
+            value: message
+        type: tool
+      height: 89
+      id: '1739603592068'
+      position:
+        x: 942
+        y: 397
+      positionAbsolute:
+        x: 942
+        y: 397
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: nyanta
+        desc: ''
+        height: 106
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"JSON Processというツールプラグイン","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"をインストールする必要があります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"右上の「ツール」からJSON Processを探してみてください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 437
+      height: 106
+      id: '1743336905643'
+      position:
+        x: 942
+        y: 135.13605433131397
+      positionAbsolute:
+        x: 942
+        y: 135.13605433131397
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 437
+    - data:
+        author: nyanta
+        desc: ''
+        height: 107
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"deploy_id","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"にはご自身のGASで作成したDeployment IDの設定が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ご自身のDeployment IDは書籍の297Pをご参照ください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 465
+      height: 107
+      id: '17433371584450'
+      position:
+        x: 440.2840395211458
+        y: 421.8792195364703
+      positionAbsolute:
+        x: 440.2840395211458
+        y: 421.8792195364703
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 465
+    viewport:
+      x: 22.953317705543895
+      y: 54.59902855465805
+      zoom: 1.0130884662082635

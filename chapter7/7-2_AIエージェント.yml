@@ -1,0 +1,123 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: agent-chat
+  name: AIエージェント
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tavily:0.0.1@91ecbb4953e8fb42a198f12da4620e75814568b46eccb7ff19b22fef37264e23
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.4@73a111bc58d4c5386811b0d1ed339f89c6e1a9a033940725f88257fff452ea70
+kind: app
+model_config:
+  agent_mode:
+    enabled: true
+    max_iteration: 5
+    prompt: null
+    strategy: function_call
+    tools:
+    - enabled: true
+      notAuthor: false
+      provider_id: langgenius/tavily/tavily
+      provider_name: langgenius/tavily/tavily
+      provider_type: builtin
+      tool_label: Tavily Search
+      tool_name: tavily_search
+      tool_parameters:
+        days: ''
+        exclude_domains: ''
+        include_answer: ''
+        include_domains: ''
+        include_image_descriptions: ''
+        include_images: ''
+        include_raw_content: ''
+        max_results: ''
+        query: ''
+        search_depth: ''
+        topic: ''
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets:
+      - dataset:
+          enabled: true
+          id: 580d2077-f911-4b32-a83d-0208bd97eeaf
+    reranking_enable: false
+    reranking_mode: weighted_score
+    reranking_model:
+      reranking_model_name: ''
+      reranking_provider_name: ''
+    retrieval_model: multiple
+    top_k: 4
+    weights:
+      keyword_setting:
+        keyword_weight: 0
+      vector_setting:
+        embedding_model_name: text-embedding-3-large
+        embedding_provider_name: langgenius/openai/openai
+        vector_weight: 1
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .MPGA
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gpt-4
+    provider: langgenius/openai/openai
+  more_like_this:
+    enabled: false
+  opening_statement: ''
+  pre_prompt: "あなたはユーザーの質問に答えるエージェントです。\n必要に応じて下記のツールを利用しながら、回答を生成してください。\n\n### ツール\n\
+    \ tavily search: 最新の情報や自身の知識から答えられない内容に関して聞かれた際に利用する\n dataset_XXX: にゃんたについて聞かれた際に利用する。検索クエリは必ず5個以上の単語をカンマ区切りで作成して利用すること\n"
+  prompt_type: simple
+  retriever_resource:
+    enabled: true
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form: []
+version: 0.1.5

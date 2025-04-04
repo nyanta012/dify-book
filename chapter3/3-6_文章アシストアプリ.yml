@@ -1,0 +1,431 @@
+app:
+  description: 入力した文章の続きを自動生成するアプリです。目指すトーンや内容を指定でき、3つの異なる文章案を提案してくれます。JSONモードとコードノードを活用し、整理された形で複数の候補を表示。報告書やメール、ブログ記事など、文章作成の幅広いシーンで活用できます。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 文章アシストアプリ
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.15@5f610705111ac49d93c4ea5eaac690abaeb3b4a87599c48e5165b549b4c47f10
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1731842906651-source-1731842978430-target
+      source: '1731842906651'
+      sourceHandle: source
+      target: '1731842978430'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1732068440008-source-1731843087943-target
+      source: '1732068440008'
+      sourceHandle: source
+      target: '1731843087943'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1731842978430-source-1732068599181-target
+      source: '1731842978430'
+      sourceHandle: source
+      target: '1732068599181'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: template-transform
+      id: 1732068599181-source-1732068440008-target
+      source: '1732068599181'
+      sourceHandle: source
+      target: '1732068440008'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: 現在の文章
+          max_length: 100000
+          options: []
+          required: true
+          type: paragraph
+          variable: original_text
+        - label: 続きの文章で特に伝えたいことを入力してください
+          max_length: 100000
+          options: []
+          required: true
+          type: paragraph
+          variable: key_message
+        - label: 続きの文章の長さを指定してください(大体の文字数)
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: length_preference
+      height: 141
+      id: '1731842906651'
+      position:
+        x: 30
+        y: 270.5
+      positionAbsolute:
+        x: 30
+        y: 270.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            response_format: json_object
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: eec39f30-debc-45a1-bd74-99ef2f1e834e
+          role: system
+          text: "あなたは文章作成の専門家です。与えられた文章の続きを3パターン書いてください。\n以下の制約に従ってJSON形式で出力してください。\n\
+            \n### 制約条件\n- 元の文章のトーンや文体を完全に踏襲し、違和感なく自然に続く文章を生成する\n- 文章の長さは{{#1731842906651.length_preference#}}とする\n\
+            - 必ず下記のJSON形式で出力する\n\n### 特に伝えたいこと\n{{#1731842906651.key_message#}}\n\n\
+            ### 元の文章\n{{#1731842906651.original_text#}}\n\n### 出力形式\n{\n    \"continuations\"\
+            : [\n        {\n            \"pattern\": 1,\n            \"text\": \"\
+            続きの文章1\"\n        },\n        ...\n    ]\n}"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1731842978430'
+      position:
+        x: 333
+        y: 270.5
+      positionAbsolute:
+        x: 333
+        y: 270.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732068440008'
+          - output
+          variable: output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1731843087943'
+      position:
+        x: 1242
+        y: 270.5
+      positionAbsolute:
+        x: 1242
+        y: 270.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: nyanta
+        desc: ''
+        height: 256
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"入力例１：営業メール/提案書のドラフト作成","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"現在の文章：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"「御社の業務効率化についてご提案させていただきたく、お時間をいただけますと幸いです。」","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"続きに含めたい要素：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 具体的な数値効果（20%の工数削減）","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- オンラインでの打ち合わせ提案","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 来週中の日程調整希望","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"希望する文章の長さ：150文字程度","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 460
+      height: 256
+      id: '1731843865123'
+      position:
+        x: -19.892072127047413
+        y: -11.376975889496023
+      positionAbsolute:
+        x: -19.892072127047413
+        y: -11.376975889496023
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 460
+    - data:
+        desc: ''
+        selected: false
+        template: "# 元の文章\r\n{{original_text}}\r\n\r\n# 続きの文章案\r\n\r\n{% for item\
+          \ in llm_response.continuations %}\r\n## パターン{{item.pattern}}\r\n{{item.text}}\r\
+          \n\r\n{% endfor %}\r\n\r\n---\r\n※ 各パターンは、文体や内容の一貫性を保ちながら、異なるアプローチで展開しています。"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1731842906651'
+          - original_text
+          variable: original_text
+        - value_selector:
+          - '1732068599181'
+          - result
+          variable: llm_response
+      height: 53
+      id: '1732068440008'
+      position:
+        x: 939
+        y: 270.5
+      positionAbsolute:
+        x: 939
+        y: 270.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "\ndef main(arg1: str) -> dict:\n    import json\n    parsed_data =\
+          \ json.loads(arg1)\n    return {\n        \"result\": parsed_data,\n   \
+          \ }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: object
+        selected: false
+        title: コード
+        type: code
+        variables:
+        - value_selector:
+          - '1731842978430'
+          - text
+          variable: arg1
+      height: 53
+      id: '1732068599181'
+      position:
+        x: 636
+        y: 270.5
+      positionAbsolute:
+        x: 636
+        y: 270.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: nyanta
+        desc: ''
+        height: 257
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"入力例２：商品説明文の作成","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"現在の文章：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"「新商品の超軽量ノートPCは、わずか900グラムながら、フルスペックの性能を実現しました。」","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"続きに含めたい要素：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- バッテリー持続時間","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 主なターゲットユーザー","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 競合製品との差別化ポイント","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 価格帯のアピール","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"希望する文章の長さ：300文字程度","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 442
+      height: 257
+      id: '1732068883547'
+      position:
+        x: 474.2616388527698
+        y: -11.376975889496023
+      positionAbsolute:
+        x: 474.2616388527698
+        y: -11.376975889496023
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 442
+    - data:
+        author: nyanta
+        desc: ''
+        height: 256
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"入力例３：社内研修マニュアルの作成","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"現在の文章：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"「本マニュアルでは、新入社員向けの基本的な業務フローについて解説します。」","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"続きに含めたい要素：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 具体的な手順","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 注意事項","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- よくある質問と回答","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"- 参考資料","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"希望する文章の長さ：500文字程度","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 490
+      height: 256
+      id: '1732068935559'
+      position:
+        x: 944.9416259216904
+        y: -11.376975889496023
+      positionAbsolute:
+        x: 944.9416259216904
+        y: -11.376975889496023
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 490
+    - data:
+        author: nyanta
+        desc: ''
+        height: 144
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"↑プロンプトとして「...」と指定しています。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"LLMの性能が高ければ上記のように記載するだけで","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"「同じように続けて」","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"という意図が伝わります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"そのため、全ての","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"出力例を書く必要はない","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"点も覚えておくと良いかもしれません🙆‍♂️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 494
+      height: 144
+      id: '17437690063560'
+      position:
+        x: 333
+        y: 394.6938242534267
+      positionAbsolute:
+        x: 333
+        y: 394.6938242534267
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 494
+    viewport:
+      x: 209.6455703379122
+      y: 109.62835724921823
+      zoom: 0.7141434062641749

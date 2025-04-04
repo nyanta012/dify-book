@@ -1,0 +1,150 @@
+app:
+  description: 営業レポート作成の自動化アプリを解説します。変数機能を使って入力フォームを作成し、担当者が必要事項を入力するだけで、統一された形式の営業レポートを自動生成できます。入力内容のばらつきを抑え、効率的なレポート作成を実現します。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: completion
+  name: 営業レポートメーカー
+  use_icon_as_answer_icon: false
+kind: app
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 5
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    reranking_enable: true
+    retrieval_model: multiple
+    top_k: 4
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .MPGA
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gpt-4o
+    provider: openai
+  more_like_this:
+    enabled: false
+  opening_statement: null
+  pre_prompt: 'あなたは営業レポートを作成する専門家です。提供された情報を基に、以下のルールに従って営業レポートを作成してください。
+
+
+    ### 入力情報
+
+    - 担当者名：{{name}}
+
+    - 報告日：{{date}}
+
+    - 売上実績：{{result}}
+
+    - 特記事項：{{message}}
+
+
+    ### レポート作成ルール
+
+    1. 冒頭で担当者名と日付を明記
+
+    2. 売上実績は具体的な数字を含めて分かりやすく説明
+
+    3. 特記事項を踏まえた今後の展望を含める
+
+    4. ビジネス文書として適切な敬語と表現を使用
+
+    5. 全体で200-300文字程度にまとめる
+
+
+    ### 出力フォーマット
+
+    件名：営業活動報告（{{date}}）
+
+
+    営業担当の{{name}}です。
+
+    {{date}}の活動についてご報告いたします。
+
+
+    【売上実績】
+
+    {売上実績の要約を記載}
+
+
+    【総括・今後の展望】
+
+    {特記事項を踏まえた総括と今後の展望を記載}
+
+
+    以上、ご報告申し上げます。'
+  prompt_type: simple
+  retriever_resource:
+    enabled: true
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form:
+  - text-input:
+      default: ''
+      label: 名前
+      max_length: 48
+      required: true
+      variable: name
+  - text-input:
+      default: ''
+      label: 日付
+      max_length: 48
+      required: true
+      variable: date
+  - paragraph:
+      default: ''
+      label: 売上実績
+      max_length: 500
+      required: true
+      variable: result
+  - paragraph:
+      default: ''
+      label: 特記事項
+      max_length: 500
+      required: true
+      variable: message
+version: 0.1.4

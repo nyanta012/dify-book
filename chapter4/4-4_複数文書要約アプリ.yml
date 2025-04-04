@@ -1,0 +1,389 @@
+app:
+  description: 複数の文書を一括で要約できるアプリの作成方法を説明しています。Difyのワークフローツール機能を活用し、既存の文書要約アプリをツールとして組み込み、イテレーションノードで繰り返し処理を実現します。会議資料や提案書など、複数文書の一括要約を効率的に行うことができます。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 複数文書要約アプリ
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1732407554259-source-1732407556781-target
+      selected: false
+      source: '1732407554259'
+      sourceHandle: source
+      target: '1732407556781'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: code
+      id: 1732407463193-source-1732410163852-target
+      selected: false
+      source: '1732407463193'
+      sourceHandle: source
+      target: '1732410163852'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: template-transform
+      id: 1732410163852-source-1732407554259-target
+      selected: false
+      source: '1732410163852'
+      sourceHandle: source
+      target: '1732407554259'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: iteration
+      id: 1732407422895-source-1732407463193-target
+      source: '1732407422895'
+      sourceHandle: source
+      target: '1732407463193'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1732407463193'
+        sourceType: iteration-start
+        targetType: tool
+      id: 1732407463193start-source-1743255828089-target
+      source: 1732407463193start
+      sourceHandle: source
+      target: '1743255828089'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: PDF(複数対応)
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: files
+      height: 89
+      id: '1732407422895'
+      position:
+        x: 30
+        y: 291
+      positionAbsolute:
+        x: 30
+        y: 291
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 182
+        is_parallel: false
+        iterator_selector:
+        - '1732407422895'
+        - files
+        output_selector:
+        - '1743255828089'
+        - text
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1732407463193start
+        title: イテレーション
+        type: iteration
+        width: 414
+      height: 182
+      id: '1732407463193'
+      position:
+        x: 333
+        y: 291
+      positionAbsolute:
+        x: 333
+        y: 291
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 414
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1732407463193start
+      parentId: '1732407463193'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 357
+        y: 359
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        desc: ''
+        selected: false
+        template: "{% for summary in summaries %}\r\n{{ summary.output }}\r\n{% endfor\
+          \ %}"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1732410163852'
+          - summaries
+          variable: summaries
+      height: 53
+      id: '1732407554259'
+      position:
+        x: 1110
+        y: 291
+      positionAbsolute:
+        x: 1110
+        y: 291
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732407554259'
+          - output
+          variable: output
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1732407556781'
+      position:
+        x: 1413
+        y: 291
+      positionAbsolute:
+        x: 1413
+        y: 291
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(arg1: list[str]) -> dict:\n    return {\"summaries\"\
+          : [json.loads(i) for i in arg1]}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          summaries:
+            children: null
+            type: array[object]
+        selected: false
+        title: コード
+        type: code
+        variables:
+        - value_selector:
+          - '1732407463193'
+          - output
+          variable: arg1
+      height: 53
+      id: '1732410163852'
+      position:
+        x: 807
+        y: 291
+      positionAbsolute:
+        x: 807
+        y: 291
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        isInIteration: true
+        is_team_authorization: true
+        iteration_id: '1732407463193'
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: 要約ファイル
+            ja_JP: 要約ファイル
+            pt_BR: 要約ファイル
+            zh_Hans: 要約ファイル
+          llm_description: ''
+          max: null
+          min: null
+          name: file
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: file
+        params:
+          file: ''
+        provider_id: 29d44e9c-d49d-41f0-a478-e2b321491300
+        provider_name: 文書要約アプリ
+        provider_type: workflow
+        selected: false
+        title: 文書要約アプリ
+        tool_configurations: {}
+        tool_label: 文書要約アプリ
+        tool_name: summarizer
+        tool_parameters:
+          file:
+            type: variable
+            value:
+            - '1732407463193'
+            - item
+        type: tool
+      height: 53
+      id: '1743255828089'
+      parentId: '1732407463193'
+      position:
+        x: 117.31493108203256
+        y: 65.72425677127859
+      positionAbsolute:
+        x: 450.31493108203256
+        y: 356.7242567712786
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        author: nyanta
+        desc: ''
+        height: 160
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"こちらのアプリを動かすには","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"4.3節の文章要約アプリの作成後、ツールの登録が必要","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"です⚠️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"登録後、文書要約アプリを読み込み、イテレーションノードの中で","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ツールノードとイテレーション開始と接続してください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"その後、イテレーションノードの設定で","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"出力変数をtext(文書要約アプリの出力変数)と設定する","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ことで利用可能となります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 724
+      height: 160
+      id: '1743255739681'
+      position:
+        x: 333
+        y: 91.2472472574469
+      positionAbsolute:
+        x: 333
+        y: 91.2472472574469
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 724
+    viewport:
+      x: 53.15906203328905
+      y: -10.556489832830948
+      zoom: 1.319507910772894

@@ -1,0 +1,995 @@
+app:
+  description: ウェブ検索を活用して最新情報を取得し、質問に回答するアプリの作成方法を解説しています。複数の検索クエリを並列処理で実行し、Tavily
+    Searchを使って関連情報を収集。得られた情報を基にLLMが文脈を考慮した回答を生成します。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: ウェブ検索アシスタント
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.11@390c87cc0f17370a70d3b214cd71a8de81fe9d6b52e6a38287acde034138b672
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tavily:0.0.5@caf7214ca1a237845e991615fd12e04c8db8b703d59773538fe243f3de4044e9
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1733226408233-source-1733226413055-target
+      source: '1733226408233'
+      sourceHandle: source
+      target: '1733226413055'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: llm
+      id: 1733226413055-source-1733231515237-target
+      source: '1733226413055'
+      sourceHandle: source
+      target: '1733231515237'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1733231618203-source-1733192656089-target
+      source: '1733231618203'
+      sourceHandle: source
+      target: '1733192656089'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1733231515237-source-1733231984107-target
+      source: '1733231515237'
+      sourceHandle: source
+      target: '1733231984107'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: template-transform
+      id: 1733231984107-source-1733231618203-target
+      source: '1733231984107'
+      sourceHandle: source
+      target: '1733231618203'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1733314179487-source-1733226349619-target
+      source: '1733314179487'
+      sourceHandle: source
+      target: '1733226349619'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1733226349619-source-1733226408233-target
+      source: '1733226349619'
+      sourceHandle: source
+      target: '1733226408233'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1733192412182-source-1733314179487-target
+      source: '1733192412182'
+      sourceHandle: source
+      target: '1733314179487'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1733226413055'
+        sourceType: iteration-start
+        targetType: tool
+      id: 1733226413055start-source-1739343996683-target
+      source: 1733226413055start
+      sourceHandle: source
+      target: '1739343996683'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733226413055'
+        sourceType: tool
+        targetType: code
+      id: 1739343996683-source-1733228096536-target
+      source: '1739343996683'
+      sourceHandle: source
+      target: '1733228096536'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1733192412182'
+      position:
+        x: 30
+        y: 421.5
+      positionAbsolute:
+        x: 30
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1733231618203.output#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 104
+      id: '1733192656089'
+      position:
+        x: 2887
+        y: 421.5
+      positionAbsolute:
+        x: 2887
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 3
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: c7565c16-48ad-4a9d-812d-4af24fbd069f
+          role: system
+          text: 'あなたの役割は、ユーザーが入力したテキストと過去の会話履歴から、最適な検索クエリを3つ生成することです。
+
+
+            ### 現在の日時
+
+            {{#1733314179487.text#}}
+
+
+            ### ガイドライン
+
+            - 入力テキストと過去の会話の文脈を考慮して、関連する検索クエリを生成してください
+
+            - 曖昧な表現（「これ」「それ」など）は具体的な表現に置き換えてください
+
+            - 具体的で検索に適した表現を使用してください
+
+            - 異なる側面や視点からの検索クエリを生成してください
+
+            - 各クエリは30文字以内に収めてください
+
+
+            ### 出力形式
+
+            JSON形式で出力:
+
+            {"query": [query_1, query_2, query_3]}'
+        selected: false
+        title: LLM(検索クエリ作成)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1733226349619'
+      position:
+        x: 638
+        y: 421.5
+      positionAbsolute:
+        x: 638
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(arg1: str) -> dict:\n    queries = json.loads(arg1)[\"\
+          query\"]\n    return {\n        \"result\": queries,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: コード(配列作成)
+        type: code
+        variables:
+        - value_selector:
+          - '1733226349619'
+          - text
+          variable: arg1
+      height: 53
+      id: '1733226408233'
+      position:
+        x: 942
+        y: 421.5
+      positionAbsolute:
+        x: 942
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: remove-abnormal-output
+        height: 443
+        is_parallel: true
+        iterator_selector:
+        - '1733226408233'
+        - result
+        output_selector:
+        - '1733228096536'
+        - filtered_results
+        output_type: array[string]
+        parallel_nums: 3
+        selected: false
+        start_node_id: 1733226413055start
+        title: イテレーション
+        type: iteration
+        width: 669
+      height: 443
+      id: '1733226413055'
+      position:
+        x: 1246
+        y: 421.5
+      positionAbsolute:
+        x: 1246
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 669
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1733226413055start
+      parentId: '1733226413055'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 1270
+        y: 489.5
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        code: "def main(arg1: list[dict]) -> dict:\n    threshold = 0.5 # 関連性のスコアの閾値\n\
+          \    filtered_results = []\n\n    # 検索結果を1つずつ確認\n    for result in arg1[0][\"\
+          results\"]:\n        if result[\"score\"] >= threshold:\n            filtered_result\
+          \ = {\n                \"title\": result[\"title\"],\n                \"\
+          url\": result[\"url\"],\n                \"content\": result[\"content\"\
+          ],\n                \"score\": result[\"score\"],\n            }\n     \
+          \       filtered_results.append(filtered_result)\n\n    return {\n     \
+          \   \"filtered_results\": filtered_results,\n    }"
+        code_language: python3
+        desc: ''
+        isInIteration: true
+        iteration_id: '1733226413055'
+        outputs:
+          filtered_results:
+            children: null
+            type: array[object]
+        selected: false
+        title: コード(フィルタリング)
+        type: code
+        variables:
+        - value_selector:
+          - '1739343996683'
+          - json
+          variable: arg1
+      height: 53
+      id: '1733228096536'
+      parentId: '1733226413055'
+      position:
+        x: 409
+        y: 69.33755521963315
+      positionAbsolute:
+        x: 1655
+        y: 490.83755521963315
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 3
+        model:
+          completion_params:
+            response_format: json_object
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 34a4000d-9436-4b48-bd09-c9739d6e84b2
+          role: system
+          text: "以下の検索結果から、ユーザーの質問に関連する情報のみを使って回答を生成してください。\n使用した情報は必ず参考情報として出力してください。\n\
+            \n### 出力フォーマット\n下記のJSON形式で出力してください。\n{\n    \"answer\": \"回答本文をここに記載\"\
+            ,\n    \"references\": [\n        {\n            \"title\": \"タイトル\",\n\
+            \            \"url\": \"URL\"\n        }\n    ]\n}\n\n### 検索結果\n{{#1733226413055.output#}}"
+        selected: false
+        title: LLM(回答生成)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1733231515237'
+      position:
+        x: 1975
+        y: 421.5
+      positionAbsolute:
+        x: 1975
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "## 回答\r\n\r\n{{answer}}\r\n\r\n## 参考情報\r\n\r\n{% if references\
+          \ %}\r\n{% for ref in references %}\r\n[{{loop.index}}] [{{ref.title}}]({{ref.url}})\r\
+          \n{% endfor %}\r\n{% else %}\r\n参考文献はありません\r\n{% endif %}"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1733231984107'
+          - answer
+          variable: answer
+        - value_selector:
+          - '1733231984107'
+          - references
+          variable: references
+        - value_selector:
+          - '1733226413055'
+          - output
+          variable: output
+      height: 53
+      id: '1733231618203'
+      position:
+        x: 2583
+        y: 421.5
+      positionAbsolute:
+        x: 2583
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(llm_output: str) -> dict:\n    parsed_output\
+          \ = json.loads(llm_output)\n    return {\n        \"answer\": parsed_output[\"\
+          answer\"], \n        \"references\": parsed_output.get(\"references\", []),\n\
+          \    }\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          answer:
+            children: null
+            type: string
+          references:
+            children: null
+            type: array[object]
+        selected: false
+        title: コード(型変換)
+        type: code
+        variables:
+        - value_selector:
+          - '1733231515237'
+          - text
+          variable: llm_output
+      height: 53
+      id: '1733231984107'
+      position:
+        x: 2279
+        y: 421.5
+      positionAbsolute:
+        x: 2279
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: time
+        provider_name: time
+        provider_type: builtin
+        selected: false
+        title: Current Time
+        tool_configurations:
+          format: '%Y-%m-%d %H:%M:%S'
+          timezone: Asia/Tokyo
+        tool_label: Current Time
+        tool_name: current_time
+        tool_parameters: {}
+        type: tool
+      height: 115
+      id: '1733314179487'
+      position:
+        x: 335.04729412282063
+        y: 421.5
+      positionAbsolute:
+        x: 335.04729412282063
+        y: 421.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        isInIteration: true
+        is_team_authorization: true
+        iteration_id: '1733226413055'
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The search query you want to execute with Tavily.
+            ja_JP: The search query you want to execute with Tavily.
+            pt_BR: The search query you want to execute with Tavily.
+            zh_Hans: 您想用 Tavily 执行的搜索查询。
+          label:
+            en_US: Query
+            ja_JP: Query
+            pt_BR: Query
+            zh_Hans: 查询
+          llm_description: The search query.
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: basic
+          form: form
+          human_description:
+            en_US: The depth of the search.
+            ja_JP: The depth of the search.
+            pt_BR: The depth of the search.
+            zh_Hans: 搜索的深度。
+          label:
+            en_US: Search Depth
+            ja_JP: Search Depth
+            pt_BR: Search Depth
+            zh_Hans: 搜索深度
+          llm_description: ''
+          max: null
+          min: null
+          name: search_depth
+          options:
+          - label:
+              en_US: Basic
+              ja_JP: Basic
+              pt_BR: Basic
+              zh_Hans: 基本
+            value: basic
+          - label:
+              en_US: Advanced
+              ja_JP: Advanced
+              pt_BR: Advanced
+              zh_Hans: 高级
+            value: advanced
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: general
+          form: form
+          human_description:
+            en_US: The category of the search.
+            ja_JP: The category of the search.
+            pt_BR: The category of the search.
+            zh_Hans: 搜索的类别。
+          label:
+            en_US: Topic
+            ja_JP: Topic
+            pt_BR: Topic
+            zh_Hans: 主题
+          llm_description: ''
+          max: null
+          min: null
+          name: topic
+          options:
+          - label:
+              en_US: General
+              ja_JP: General
+              pt_BR: General
+              zh_Hans: 一般
+            value: general
+          - label:
+              en_US: News
+              ja_JP: News
+              pt_BR: News
+              zh_Hans: 新闻
+            value: news
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 3
+          form: form
+          human_description:
+            en_US: The number of days back from the current date to include in the
+              search results (only applicable when "topic" is "news").
+            ja_JP: The number of days back from the current date to include in the
+              search results (only applicable when "topic" is "news").
+            pt_BR: The number of days back from the current date to include in the
+              search results (only applicable when "topic" is "news").
+            zh_Hans: 从当前日期起向前追溯的天数，以包含在搜索结果中（仅当“topic”为“news”时适用）。
+          label:
+            en_US: Days
+            ja_JP: Days
+            pt_BR: Days
+            zh_Hans: 天数
+          llm_description: ''
+          max: null
+          min: 1
+          name: days
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: 5
+          form: form
+          human_description:
+            en_US: The maximum number of search results to return.
+            ja_JP: The maximum number of search results to return.
+            pt_BR: The maximum number of search results to return.
+            zh_Hans: 要返回的最大搜索结果数。
+          label:
+            en_US: Max Results
+            ja_JP: Max Results
+            pt_BR: Max Results
+            zh_Hans: 最大结果数
+          llm_description: ''
+          max: 20
+          min: 1
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Include a list of query-related images in the response.
+            ja_JP: Include a list of query-related images in the response.
+            pt_BR: Include a list of query-related images in the response.
+            zh_Hans: 在响应中包含与查询相关的图片列表。
+          label:
+            en_US: Include Images
+            ja_JP: Include Images
+            pt_BR: Include Images
+            zh_Hans: 包含图片
+          llm_description: ''
+          max: null
+          min: null
+          name: include_images
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: When include_images is True, adds descriptive text for each image.
+            ja_JP: When include_images is True, adds descriptive text for each image.
+            pt_BR: When include_images is True, adds descriptive text for each image.
+            zh_Hans: 当 include_images 为 True 时，为每个图像添加描述文本。
+          label:
+            en_US: Include Image Descriptions
+            ja_JP: Include Image Descriptions
+            pt_BR: Include Image Descriptions
+            zh_Hans: 包含图片描述
+          llm_description: ''
+          max: null
+          min: null
+          name: include_image_descriptions
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Include a short answer to the original query in the response.
+            ja_JP: Include a short answer to the original query in the response.
+            pt_BR: Include a short answer to the original query in the response.
+            zh_Hans: 在响应中包含对原始查询的简短回答。
+          label:
+            en_US: Include Answer
+            ja_JP: Include Answer
+            pt_BR: Include Answer
+            zh_Hans: 包含答案
+          llm_description: ''
+          max: null
+          min: null
+          name: include_answer
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Include the cleaned and parsed HTML content of each search result.
+            ja_JP: Include the cleaned and parsed HTML content of each search result.
+            pt_BR: Include the cleaned and parsed HTML content of each search result.
+            zh_Hans: 包含每个搜索结果的已清理和解析的HTML内容。
+          label:
+            en_US: Include Raw Content
+            ja_JP: Include Raw Content
+            pt_BR: Include Raw Content
+            zh_Hans: 包含原始内容
+          llm_description: ''
+          max: null
+          min: null
+          name: include_raw_content
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: A comma-separated list of domains to specifically include in the
+              search results.
+            ja_JP: A comma-separated list of domains to specifically include in the
+              search results.
+            pt_BR: A comma-separated list of domains to specifically include in the
+              search results.
+            zh_Hans: 要在搜索结果中特别包含的域的逗号分隔列表。
+          label:
+            en_US: Include Domains
+            ja_JP: Include Domains
+            pt_BR: Include Domains
+            zh_Hans: 包含域
+          llm_description: ''
+          max: null
+          min: null
+          name: include_domains
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: A comma-separated list of domains to specifically exclude from
+              the search results.
+            ja_JP: A comma-separated list of domains to specifically exclude from
+              the search results.
+            pt_BR: A comma-separated list of domains to specifically exclude from
+              the search results.
+            zh_Hans: 要从搜索结果中特别排除的域的逗号分隔列表。
+          label:
+            en_US: Exclude Domains
+            ja_JP: Exclude Domains
+            pt_BR: Exclude Domains
+            zh_Hans: 排除域
+          llm_description: ''
+          max: null
+          min: null
+          name: exclude_domains
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          days: ''
+          exclude_domains: ''
+          include_answer: ''
+          include_domains: ''
+          include_image_descriptions: ''
+          include_images: ''
+          include_raw_content: ''
+          max_results: ''
+          query: ''
+          search_depth: ''
+          topic: ''
+        provider_id: langgenius/tavily/tavily
+        provider_name: langgenius/tavily/tavily
+        provider_type: builtin
+        selected: false
+        title: Tavily Search
+        tool_configurations:
+          days: 3
+          exclude_domains: null
+          include_answer: 0
+          include_domains: null
+          include_image_descriptions: 0
+          include_images: 0
+          include_raw_content: 0
+          max_results: 5
+          search_depth: basic
+          topic: general
+        tool_label: Tavily Search
+        tool_name: tavily_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#1733226413055.item#}}'
+        type: tool
+      height: 323
+      id: '1739343996683'
+      parentId: '1733226413055'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 1374
+        y: 489.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        author: nyanta
+        desc: ''
+        height: 140
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"Tavilyというツールの認証設定が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"右上の「ツール」からtavilyを検索して、プラグインツールをインストールした後","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"Tavilyの公式からAPIキーを発行する必要があります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"https://tavily.com/","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 474
+      height: 140
+      id: '1743334836063'
+      position:
+        x: 1246
+        y: 246.4739160026014
+      positionAbsolute:
+        x: 1246
+        y: 246.4739160026014
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 474
+    - data:
+        author: nyanta
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: ''
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1743335251719'
+      position:
+        x: 1662.7034051140843
+        y: 567.7564710538564
+      positionAbsolute:
+        x: 1662.7034051140843
+        y: 567.7564710538564
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: nyanta
+        desc: ''
+        height: 204
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"コード(フィルタリング)の  threshold=0.5 の値を上げる(0.8などにする)と","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"より関連した情報しか後続のノードに渡さなくなります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"一方、下げる(0.2などにする)と幅広い情報を渡すようになります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"値を下げすぎると、情報が増えてコストも上がりますので","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"自身の用途に応じて調整してみてください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 427
+      height: 204
+      id: '1743335257919'
+      position:
+        x: 1932.9052888018064
+        y: 554.1416474571882
+      positionAbsolute:
+        x: 1932.9052888018064
+        y: 554.1416474571882
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 427
+    viewport:
+      x: -557.6183861664431
+      y: -47.11749945158226
+      zoom: 0.9548416039104165
