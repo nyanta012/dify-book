@@ -10,7 +10,7 @@
 
 ## 概要
 
-このリポジトリは「**ゼロからわかるDifyの教科書 ～生成AI×ノーコードでかんたん業務効率化**」の公式サンプルコードとリソースを提供しています。
+このリポジトリは「[**ゼロからわかるDifyの教科書 ～生成AI×ノーコードでかんたん業務効率化**](https://www.amazon.co.jp/%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E3%82%8F%E3%81%8B%E3%82%8BDify%E3%81%AE%E6%95%99%E7%A7%91%E6%9B%B8-%EF%BD%9E%E7%94%9F%E6%88%90AI%C3%97%E3%83%8E%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%A7%E3%81%8B%E3%82%93%E3%81%9F%E3%82%93%E6%A5%AD%E5%8B%99%E5%8A%B9%E7%8E%87%E5%8C%96-%E3%81%AB%E3%82%83%E3%82%93%E3%81%9F/dp/4297148366/ref=pd_ci_mcx_mh_mcx_views_0_image?pd_rd_w=tSM9L&content-id=amzn1.sym.7133fed1-b7f0-4a9a-85e6-ec0056dbe781%3Aamzn1.symc.409c7fce-cbd2-4cf4-a6cb-824c258c8778&pf_rd_p=7133fed1-b7f0-4a9a-85e6-ec0056dbe781&pf_rd_r=H93BQDE1GRRN3PSX0008&pd_rd_wg=iFxhE&pd_rd_r=3abf0e11-7109-4f01-a488-247cb764de99&pd_rd_i=4297148366)」のDSLファイルやサンプルデータなどを提供しています。
 
 <p align="center">
   <img src="assets/images/ゼロからわかるDifyの教科書.jpg" width="400" alt="ゼロからわかるDifyの教科書">
