@@ -9,11 +9,11 @@ dependencies:
 - current_identifier: null
   type: marketplace
   value:
-    marketplace_plugin_unique_identifier: langgenius/openai:0.0.4@73a111bc58d4c5386811b0d1ed339f89c6e1a9a033940725f88257fff452ea70
+    marketplace_plugin_unique_identifier: langgenius/json_process:0.0.1@0c77a81ebc6e3ad0da30d9479c51a9147c88fa00bf6822fc1bb9c72141f7a89a
 - current_identifier: null
   type: marketplace
   value:
-    marketplace_plugin_unique_identifier: langgenius/json_process:0.0.1@0c77a81ebc6e3ad0da30d9479c51a9147c88fa00bf6822fc1bb9c72141f7a89a
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.4@73a111bc58d4c5386811b0d1ed339f89c6e1a9a033940725f88257fff452ea70
 kind: app
 version: 0.1.5
 workflow:
@@ -125,10 +125,10 @@ workflow:
         isInLoop: false
         sourceType: code
         targetType: tool
-      id: 1733400742913-source-1743338197202-target
+      id: 1733400742913-source-1743913929843-target
       source: '1733400742913'
       sourceHandle: source
-      target: '1743338197202'
+      target: '1743913929843'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -136,8 +136,8 @@ workflow:
         isInLoop: false
         sourceType: tool
         targetType: tool
-      id: 1743338197202-source-1733399674623-target
-      source: '1743338197202'
+      id: 1743913929843-source-1733399674623-target
+      source: '1743913929843'
       sourceHandle: source
       target: '1733399674623'
       targetHandle: target
@@ -147,8 +147,8 @@ workflow:
         isInLoop: false
         sourceType: tool
         targetType: tool
-      id: 1743338197202-source-1733399907238-target
-      source: '1743338197202'
+      id: 1743913929843-source-1733399907238-target
+      source: '1743913929843'
       sourceHandle: source
       target: '1733399907238'
       targetHandle: target
@@ -299,7 +299,7 @@ workflow:
         tool_parameters:
           content:
             type: mixed
-            value: '{{#1743338197202.text#}}'
+            value: '{{#1743913929843.text#}}'
           json_filter:
             type: mixed
             value: status
@@ -345,7 +345,7 @@ workflow:
       positionAbsolute:
         x: 1545
         y: 248.5
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -364,7 +364,7 @@ workflow:
         tool_parameters:
           content:
             type: mixed
-            value: '{{#1743338197202.text#}}'
+            value: '{{#1743913929843.text#}}'
           json_filter:
             type: mixed
             value: message
@@ -373,10 +373,10 @@ workflow:
       id: '1733399907238'
       position:
         x: 1242
-        y: 377.5
+        y: 373.1203628129157
       positionAbsolute:
         x: 1242
-        y: 377.5
+        y: 373.1203628129157
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -546,8 +546,8 @@ workflow:
           支払期限: ''
           請求番号: ''
           請求金額: ''
-        provider_id: 9ab6e39a-12f4-4ba9-af61-24e9c4fb4372
-        provider_name: registerinvoice
+        provider_id: bd2b1e69-a648-445c-aa77-d982787f8822
+        provider_name: invoice
         provider_type: api
         selected: false
         title: registerInvoice
@@ -569,7 +569,7 @@ workflow:
             value: '{{#1733400742913.amount#}}'
         type: tool
       height: 53
-      id: '1743338197202'
+      id: '1743913929843'
       position:
         x: 939
         y: 248.5
@@ -594,8 +594,9 @@ workflow:
           14px;","text":"  description: Google Apps Script を使用して請求書データをスプレッドシートに登録するAPI","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"servers:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"  - url: https://script.google.com/macros/s/","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"(ご自身のdeploy_idを入れてください)","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"/exec","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ご自身のdeploy_idを入れてください","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"/exec","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"paths:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"  \"\":","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"    post:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
@@ -665,11 +666,12 @@ workflow:
         height: 228
         selected: false
         showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"REGISTERINVOICEのカスタムツールの設定が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"右のOpenAPIを利用して、右上の「ツール」⇒「カスタム」から","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"ステップ１","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"REGISTERINVOICEのカスタムツールの設定が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
           14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"カスタムツールを作成してください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;","text":"右のOpenAPIを利用して、右上の「ツール」⇒「カスタム」から","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"カスタムツールを作成してください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
           14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"deploy_idには、ご自身で作成した","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"GASのdeployment idを設定する必要があります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
@@ -697,41 +699,80 @@ workflow:
         height: 234
         selected: false
         showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"カスタムツールを作成後、入力変数を設定してください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"請求番号：invoice_number","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"取引先名：company_name","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"請求金額：amount","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"支払い期限：due_date","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"ステップ２","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
           14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"となります🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"JSON PARSEの入力変数として","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;","text":"カスタムツールを作成後、","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"コードノードと接続してから","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"入力変数を設定してください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"請求番号：invoice_number(変数)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"取引先名：company_name(変数)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"請求金額：amount(変数)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"支払い期限：due_date(変数)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
           14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"REGISTERINVOICEノードの出力変数であるtextを指定する必要があります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+          14px;","text":"となります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"それぞれの値は","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"変数を設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"してください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"変数は「/」または「{」 を押すと参照できるようになります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
         theme: blue
         title: ''
         type: ''
-        width: 458
+        width: 578
       height: 234
       id: '1743338286171'
       position:
-        x: 737.1646974390438
-        y: 334.5
+        x: 618.4814512516627
+        y: 339.9745464838555
       positionAbsolute:
-        x: 737.1646974390438
-        y: 334.5
-      selected: true
+        x: 618.4814512516627
+        y: 339.9745464838555
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom-note
-      width: 458
+      width: 578
+    - data:
+        author: nyanta
+        desc: ''
+        height: 147
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"ステップ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"３","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"JSON PARSEの入力変数として","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"REGISTERINVOICEノードの出力変数であるtext","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"をJSON dataの欄で設定してください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 442
+      height: 147
+      id: '1743914083265'
+      position:
+        x: 1249.7888856189659
+        y: 485.8549063495901
+      positionAbsolute:
+        x: 1249.7888856189659
+        y: 485.8549063495901
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 442
     viewport:
-      x: 50.49616276310678
-      y: 146.4149663766471
-      zoom: 0.6299605249474364
+      x: -379.45426411541416
+      y: 186.26013243070656
+      zoom: 0.9133176628868017

@@ -3,7 +3,7 @@ info:
   title: 請求書データ登録 API
   description: Google Apps Script を使用して請求書データをスプレッドシートに登録するAPI
 servers:
-  - url: https://script.google.com/macros/s/(ご自身のdeploy_idを入れてください)/exec
+  - url: https://script.google.com/macros/s/ご自身のdeploy_idを入れてください/exec
 paths:
   "":
     post:
