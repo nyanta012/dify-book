@@ -207,7 +207,7 @@ workflow:
       positionAbsolute:
         x: 1180.1994324499396
         y: 262.5
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -312,7 +312,7 @@ workflow:
         title: 使い方の説明
         type: answer
         variables: []
-      height: 517
+      height: 581
       id: '1732327111150'
       position:
         x: 642.488403383517
@@ -328,35 +328,27 @@ workflow:
     - data:
         author: nyanta
         desc: ''
-        height: 270
+        height: 255
         selected: false
         showAuthor: true
         text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"4.1に引き続き、PDFファイルの文章を","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"余談ですが、こちらのでアプリではPDFファイルの文章を","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
           14px;","text":"全て言語モデル","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"に入力します。 ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;","text":"に入力しています。 ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
           14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"5章で学ぶRAG手法では文章の一部のみを入力するため、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"5章を学んだ後にこの方法を見ると、コストがかかる力技のように感じるかもしれません。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"5章で学ぶRAGでは文章の一部のみを入力するため、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"5章を学んだ後にこの方法を見ると、コストがかかる力技のように感じるかもしれません。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"しかし実際には、RAGでは","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
           14px;","text":"文書全体の情報が必要となる質問に対応できない","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"ことがあります。 ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"例えば「文書全体の要約を作成してほしい」といった質問には対応が難しいのです。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"そのような場合、質問分類器などで「文書全体を読む必要があるか」などでクラス分けをして","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"ここで紹介するように文書全体を読み込ませる方法を行うのも有効な選択肢となるかもしれません。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+          14px;","text":"ことがあります。 ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"例えば「文書全体の要約を作成してほしい」といった質問には対応が難しいのです。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"そのような場合、質問分類器などで「文書全体を読む必要があるか」などでクラス分けをして","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ここで紹介するように文書全体を読み込ませる方法を行うのも有効な選択肢となるかもしれません。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
         theme: blue
         title: ''
         type: ''
-        width: 580
-      height: 270
+        width: 673
+      height: 255
       id: '1743254208691'
       position:
         x: 918.9682765486074
@@ -368,8 +360,39 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom-note
-      width: 580
+      width: 673
+    - data:
+        author: nyanta
+        desc: ''
+        height: 240
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"入力変数の","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"pdf_file","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"は入力必須として定義しているため","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"最初にPDFファイルをアップロードする必要があります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ちょうど良いPDFがなければ下記をご利用ください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"(右上のDownload raw fileからダウンロードできます)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://github.com/nyanta012/dify-book/blob/main/chapter4/%E5%90%84%E3%82%BB%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AA%E3%81%A9/section2/PetAI%20Guardian%E8%AA%AC%E6%98%8E%E6%9B%B8.pdf","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 553
+      height: 240
+      id: '17439152007100'
+      position:
+        x: 86.19717874530556
+        y: -6.983203620758985
+      positionAbsolute:
+        x: 86.19717874530556
+        y: -6.983203620758985
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 553
     viewport:
-      x: -217.18715316595853
-      y: -80.50916906904433
-      zoom: 1.1334061394631219
+      x: 15.070076475364203
+      y: 92.91788306673999
+      zoom: 0.9481594130929794
