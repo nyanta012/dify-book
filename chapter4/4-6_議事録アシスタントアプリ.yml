@@ -5,8 +5,13 @@ app:
   mode: advanced-chat
   name: 議事録アシスタントアプリ
   use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.22@fa668d0ec3b434270453ede311196acaad0531ad9e3d5561cd622e6508cd3254
 kind: app
-version: 0.1.5
+version: 0.2.0
 workflow:
   conversation_variables:
   - description: 文字起こしの内容を保存する変数
@@ -169,14 +174,14 @@ workflow:
           required: true
           type: file
           variable: audio
-      height: 90
+      height: 89
       id: '1732786717260'
       position:
         x: 30
-        y: 298.5
+        y: 300
       positionAbsolute:
         x: 30
-        y: 298.5
+        y: 300
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -199,14 +204,14 @@ workflow:
         selected: false
         title: IF/ELSE
         type: if-else
-      height: 126
+      height: 125
       id: '1732786725438'
       position:
         x: 334
-        y: 298.5
+        y: 300
       positionAbsolute:
         x: 334
-        y: 298.5
+        y: 300
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -220,7 +225,7 @@ workflow:
         selected: false
         title: Speech To Text
         tool_configurations:
-          model: openai#whisper-1
+          model: langgenius/openai/openai#whisper-1
         tool_label: Speech To Text
         tool_name: asr
         tool_parameters:
@@ -230,14 +235,14 @@ workflow:
             - '1732786717260'
             - audio
         type: tool
-      height: 90
+      height: 89
       id: '1732786770540'
       position:
         x: 638
-        y: 159.35011065838603
+        y: 300
       positionAbsolute:
         x: 638
-        y: 159.35011065838603
+        y: 300
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -255,14 +260,14 @@ workflow:
         title: 変数代入
         type: assigner
         write_mode: over-write
-      height: 88
+      height: 87
       id: '1732786870269'
       position:
-        x: 915.2214560753798
-        y: 159.35011065838603
+        x: 942
+        y: 300
       positionAbsolute:
-        x: 915.2214560753798
-        y: 159.35011065838603
+        x: 942
+        y: 300
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -291,14 +296,14 @@ workflow:
         title: 回答
         type: answer
         variables: []
-      height: 198
+      height: 200
       id: '1732786880439'
       position:
-        x: 1491.7445834251503
-        y: 298.5
+        x: 1550
+        y: 300
       positionAbsolute:
-        x: 1491.7445834251503
-        y: 298.5
+        x: 1550
+        y: 300
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -313,7 +318,7 @@ workflow:
           completion_params: {}
           mode: chat
           name: gpt-4o
-          provider: openai
+          provider: langgenius/openai/openai
         prompt_template:
         - id: 01cab36a-7f27-4bfd-bdcc-f24922572b8a
           role: system
@@ -345,14 +350,14 @@ workflow:
         variables: []
         vision:
           enabled: false
-      height: 98
+      height: 89
       id: '1732787123137'
       position:
         x: 638
-        y: 428.5
+        y: 435.5
       positionAbsolute:
         x: 638
-        y: 428.5
+        y: 435.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -361,19 +366,19 @@ workflow:
     - data:
         answer: '{{#1732787123137.text#}}'
         desc: ''
-        selected: true
+        selected: false
         title: 回答 2
         type: answer
         variables: []
-      height: 102
+      height: 104
       id: '1732787208678'
       position:
-        x: 915.2214560753798
-        y: 428.5
+        x: 942
+        y: 427
       positionAbsolute:
-        x: 915.2214560753798
-        y: 428.5
-      selected: true
+        x: 942
+        y: 427
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -387,7 +392,7 @@ workflow:
           completion_params: {}
           mode: chat
           name: gpt-4o
-          provider: openai
+          provider: langgenius/openai/openai
         prompt_template:
         - id: 90d90554-53de-44e9-9192-610fc2f08fcb
           role: system
@@ -408,20 +413,80 @@ workflow:
         variables: []
         vision:
           enabled: false
-      height: 98
+      height: 89
       id: '1732787478347'
       position:
-        x: 1188.3071737630528
-        y: 159.35011065838603
+        x: 1246
+        y: 300
       positionAbsolute:
-        x: 1188.3071737630528
-        y: 159.35011065838603
+        x: 1246
+        y: 300
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
+    - data:
+        author: Dify
+        desc: ''
+        height: 102
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"↓モデルが選択されていない場合はwhisper-1を選択してください🙆‍♂️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 263
+      height: 102
+      id: '1747051568204'
+      position:
+        x: 638
+        y: 164.77211499638162
+      positionAbsolute:
+        x: 638
+        y: 164.77211499638162
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 263
+    - data:
+        author: Dify
+        desc: ''
+        height: 157
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"入力ファイルのサイズが大きい場合はエラーが出ることがあります⚠️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"コミュニティ版だとデフォルトでファイルサイズ上限が15MBですが、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"クラウド版で12MBのファイルでエラーが出たため、","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"サンプルファイルのサイズは5MBとしております","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"🙇‍♂️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 491
+      height: 157
+      id: '17470516334710'
+      position:
+        x: 30
+        y: 109.36737908820146
+      positionAbsolute:
+        x: 30
+        y: 109.36737908820146
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 491
     viewport:
-      x: -690.9164073567415
-      y: -43.03588365973491
-      zoom: 1.3367782454745814
+      x: 102
+      y: 272.81896972656244
+      zoom: 0.7
