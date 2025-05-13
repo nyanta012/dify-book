@@ -16,7 +16,7 @@ dependencies:
   value:
     marketplace_plugin_unique_identifier: langgenius/tavily:0.0.5@caf7214ca1a237845e991615fd12e04c8db8b703d59773538fe243f3de4044e9
 kind: app
-version: 0.1.5
+version: 0.2.0
 workflow:
   conversation_variables: []
   environment_variables: []
@@ -231,7 +231,8 @@ workflow:
             enabled: true
             size: 3
         model:
-          completion_params: {}
+          completion_params:
+            response_format: json_object
           mode: chat
           name: gpt-4o
           provider: langgenius/openai/openai
@@ -896,7 +897,7 @@ workflow:
       positionAbsolute:
         x: 1374
         y: 489.5
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -926,7 +927,7 @@ workflow:
       positionAbsolute:
         x: 1246
         y: 246.4739160026014
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom-note
@@ -990,6 +991,6 @@ workflow:
       type: custom-note
       width: 427
     viewport:
-      x: -557.6183861664431
-      y: -47.11749945158226
-      zoom: 0.9548416039104165
+      x: 188.60408980986335
+      y: 117.55976766093639
+      zoom: 0.5575146828097339
