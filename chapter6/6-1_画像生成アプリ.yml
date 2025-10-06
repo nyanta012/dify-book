@@ -9,9 +9,10 @@ dependencies:
 - current_identifier: null
   type: marketplace
   value:
-    marketplace_plugin_unique_identifier: langgenius/dalle:0.0.3@44f7ba07c0bcc598cade44d22aec0344573e19014bd3215a2f67077c9abd6c1c
+    marketplace_plugin_unique_identifier: langgenius/openai_tool:0.1.1@37404e4c35dadcdabba40e37687aed251e9585075f7fedb57dff2d60505968b8
+    version: null
 kind: app
-version: 0.1.5
+version: 0.4.0
 workflow:
   conversation_variables: []
   environment_variables: []
@@ -62,21 +63,22 @@ workflow:
     edges:
     - data:
         isInIteration: false
+        isInLoop: false
         sourceType: start
         targetType: tool
-      id: 1733277244361-source-1739295234225-target
+      id: 1733277244361-source-1759738007452-target
       source: '1733277244361'
       sourceHandle: source
-      target: '1739295234225'
+      target: '1759738007452'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
-        isInIteration: false
+        isInLoop: false
         sourceType: tool
         targetType: answer
-      id: 1739295234225-source-answer-target
-      source: '1739295234225'
+      id: 1759738007452-source-answer-target
+      source: '1759738007452'
       sourceHandle: source
       target: answer
       targetHandle: target
@@ -89,7 +91,7 @@ workflow:
         title: 開始
         type: start
         variables: []
-      height: 53
+      height: 52
       id: '1733277244361'
       position:
         x: 30
@@ -101,7 +103,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         answer: '{{#1739295234225.files#}}'
         desc: ''
@@ -109,7 +111,7 @@ workflow:
         title: 回答
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: answer
       position:
         x: 638
@@ -121,11 +123,53 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
+        author: nyanta
         desc: ''
+        height: 288
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"最新バージョンでは、DALL-E3のプラグインがOpenAI Toolのプラグインに内包されました。そのため、こちらではOpenAI
+          Toolのプラグインを用いて画像生成を行なっています。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"アプリを動作させるには","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"DALL-E3の認証設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"右上の「ツール」から、DALL-Eの認証設定(OpenAIのAPIキーの設定)を済ませることで","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"画像生成が行えるようになります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"OpenAIのAPIキーを忘れた場合は、書籍の2.4節 51Pをご参照ください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"https://platform.openai.com/api-keys","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"また、執筆後gpt-image-1というより精度が高い画像生成モデルが登場して、こちらもOpenAI Toolの方から選択できるため、よろしければ試してみてください🙆‍♂️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          14px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 633
+      height: 288
+      id: '1743334473479'
+      position:
+        x: 332
+        y: -30.785694701073737
+      positionAbsolute:
+        x: 332
+        y: -30.785694701073737
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 633
+    - data:
         is_team_authorization: true
-        output_schema: null
         paramSchemas:
         - auto_generate: null
           default: null
@@ -173,19 +217,22 @@ workflow:
           min: null
           name: size
           options:
-          - label:
+          - icon: ''
+            label:
               en_US: Squre(1024x1024)
               ja_JP: Squre(1024x1024)
               pt_BR: Squre(1024x1024)
               zh_Hans: 方(1024x1024)
             value: square
-          - label:
+          - icon: ''
+            label:
               en_US: Vertical(1024x1792)
               ja_JP: Vertical(1024x1792)
               pt_BR: Vertical(1024x1792)
               zh_Hans: 竖屏(1024x1792)
             value: vertical
-          - label:
+          - icon: ''
+            label:
               en_US: Horizontal(1792x1024)
               ja_JP: Horizontal(1792x1024)
               pt_BR: Horizontal(1792x1024)
@@ -239,13 +286,15 @@ workflow:
           min: null
           name: quality
           options:
-          - label:
+          - icon: ''
+            label:
               en_US: Standard
               ja_JP: Standard
               pt_BR: Standard
               zh_Hans: 标准
             value: standard
-          - label:
+          - icon: ''
+            label:
               en_US: HD
               ja_JP: HD
               pt_BR: HD
@@ -275,13 +324,15 @@ workflow:
           min: null
           name: style
           options:
-          - label:
+          - icon: ''
+            label:
               en_US: Vivid
               ja_JP: Vivid
               pt_BR: Vivid
               zh_Hans: 生动
             value: vivid
-          - label:
+          - icon: ''
+            label:
               en_US: Natural
               ja_JP: Natural
               pt_BR: Natural
@@ -299,73 +350,47 @@ workflow:
           quality: ''
           size: ''
           style: ''
-        provider_id: langgenius/dalle/dalle
-        provider_name: langgenius/dalle/dalle
+        provider_id: langgenius/openai_tool/openai
+        provider_name: langgenius/openai_tool/openai
         provider_type: builtin
         selected: false
         title: DALL-E 3
         tool_configurations:
-          n: 1
-          quality: standard
-          size: square
-          style: vivid
+          n:
+            type: constant
+            value: 1
+          quality:
+            type: constant
+            value: standard
+          size:
+            type: constant
+            value: square
+          style:
+            type: constant
+            value: vivid
+        tool_description: DALL-E is a text to image tool
         tool_label: DALL-E 3
         tool_name: dalle3
+        tool_node_version: '2'
         tool_parameters:
           prompt:
             type: mixed
             value: '{{#sys.query#}}'
         type: tool
-      height: 167
-      id: '1739295234225'
+      height: 166
+      id: '1759738007452'
       position:
-        x: 334
+        x: 332
         y: 283.5
       positionAbsolute:
-        x: 334
+        x: 332
         y: 283.5
-      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
-    - data:
-        author: nyanta
-        desc: ''
-        height: 181
-        selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"アプリを動作させるには","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"DALL-E3の認証設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"右上の「ツール」から、DALL-Eの認証設定(OpenAIのAPIキーの設定)を済ませることで","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"画像生成が行えるようになります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"OpenAIのAPIキーを忘れた場合は、書籍の2.4節 51Pをご参照ください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"https://platform.openai.com/api-keys","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 505
-      height: 181
-      id: '1743334473479'
-      position:
-        x: 334
-        y: 69.64823439613404
-      positionAbsolute:
-        x: 334
-        y: 69.64823439613404
-      selected: true
-      sourcePosition: right
-      targetPosition: left
-      type: custom-note
-      width: 505
+      width: 242
     viewport:
-      x: 87.55298464529778
-      y: 75.49168862216419
-      zoom: 1.1111807363777393
+      x: -51.57601913301846
+      y: 130.7268533011041
+      zoom: 0.8264139494101255
+  rag_pipeline_variables: []
