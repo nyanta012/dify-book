@@ -131,24 +131,24 @@ workflow:
         selected: false
         showAuthor: true
         text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"最新バージョンでは、DALL-E3のプラグインがOpenAI Toolのプラグインに内包されました。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
-          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"そのため、こちらではOpenAI Toolのプラグインを用いて画像生成を行なっています。","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"プラグインのマーケットストアで","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"OpenAI Tool","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"と検索できるため、そちらをインストールしてください。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","text":"最新バージョンでは、DALL-E3のプラグインがOpenAI Toolのプラグインに内包されました。そのため、こちらではOpenAI
+          Toolのプラグインを用いて画像生成を行なっています。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
           14px;","textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
           14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"アプリを動作させるには","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
-          14px;","text":"OpenAIのAPI KEYの認証設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"DALL-E3の認証設定","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"が必要です。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"右上の「ツール」から、DALL-Eの認証設定(OpenAIのAPIキーの設定)を済ませることで","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"画像生成が行えるようになります。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
           14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"OpenAIのAPIキーを忘れた場合は、書籍の2.4節 51Pをご参照ください🙌","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
           14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
           14px;","text":"https://platform.openai.com/api-keys","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
           14px;","textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
           14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"また、執筆後gpt-image-1というより精度が高い画像生成モデルが登場して、こちらもOpenAI Toolの方から選択できるため、よろしければお試しください！","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","text":"また、執筆後gpt-image-1というより精度が高い画像生成モデルが登場して、こちらもOpenAI Toolの方から選択できるため、よろしければ試してみてください🙆‍♂️","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
           14px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
           14px;"}}'
         theme: blue
@@ -391,7 +391,7 @@ workflow:
       type: custom
       width: 242
     viewport:
-      x: 136.50477730999387
-      y: 147.69160901814874
-      zoom: 0.5241409457266557
+      x: 28.423980866981537
+      y: 68.72685330110409
+      zoom: 0.8264139494101255
   rag_pipeline_variables: []
