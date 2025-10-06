@@ -9,9 +9,10 @@ dependencies:
 - current_identifier: null
   type: marketplace
   value:
-    marketplace_plugin_unique_identifier: langgenius/openai:0.0.22@fa668d0ec3b434270453ede311196acaad0531ad9e3d5561cd622e6508cd3254
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.3@5a7f82fa86e28332ad51941d0b491c1e8a38ead539656442f7bf4c6129cd15fa
+    version: null
 kind: app
-version: 0.2.0
+version: 0.4.0
 workflow:
   conversation_variables:
   - description: 文字起こしの内容を保存する変数
@@ -41,7 +42,7 @@ workflow:
       fileUploadConfig:
         audio_file_size_limit: 50
         batch_count_limit: 5
-        file_size_limit: 15
+        file_size_limit: 25
         image_file_size_limit: 10
         video_file_size_limit: 100
         workflow_file_upload_limit: 10
@@ -174,7 +175,7 @@ workflow:
           required: true
           type: file
           variable: audio
-      height: 89
+      height: 87
       id: '1732786717260'
       position:
         x: 30
@@ -186,7 +187,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         cases:
         - case_id: 'true'
@@ -204,7 +205,7 @@ workflow:
         selected: false
         title: IF/ELSE
         type: if-else
-      height: 125
+      height: 123
       id: '1732786725438'
       position:
         x: 334
@@ -216,7 +217,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         desc: ''
         provider_id: audio
@@ -225,9 +226,12 @@ workflow:
         selected: false
         title: Speech To Text
         tool_configurations:
-          model: langgenius/openai/openai#whisper-1
+          model:
+            type: constant
+            value: langgenius/openai/openai#whisper-1
         tool_label: Speech To Text
         tool_name: asr
+        tool_node_version: '2'
         tool_parameters:
           audio_file:
             type: variable
@@ -235,7 +239,7 @@ workflow:
             - '1732786717260'
             - audio
         type: tool
-      height: 89
+      height: 87
       id: '1732786770540'
       position:
         x: 638
@@ -247,7 +251,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         assigned_variable_selector:
         - conversation
@@ -260,7 +264,7 @@ workflow:
         title: 変数代入
         type: assigner
         write_mode: over-write
-      height: 87
+      height: 83
       id: '1732786870269'
       position:
         x: 942
@@ -272,7 +276,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         answer: '{{#1732787478347.text#}}
 
@@ -296,7 +300,7 @@ workflow:
         title: 回答
         type: answer
         variables: []
-      height: 200
+      height: 198
       id: '1732786880439'
       position:
         x: 1550
@@ -308,7 +312,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         context:
           enabled: false
@@ -350,7 +354,7 @@ workflow:
         variables: []
         vision:
           enabled: false
-      height: 89
+      height: 93
       id: '1732787123137'
       position:
         x: 638
@@ -362,7 +366,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         answer: '{{#1732787123137.text#}}'
         desc: ''
@@ -370,7 +374,7 @@ workflow:
         title: 回答 2
         type: answer
         variables: []
-      height: 104
+      height: 102
       id: '1732787208678'
       position:
         x: 942
@@ -382,7 +386,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         context:
           enabled: false
@@ -413,7 +417,7 @@ workflow:
         variables: []
         vision:
           enabled: false
-      height: 89
+      height: 93
       id: '1732787478347'
       position:
         x: 1246
@@ -425,7 +429,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         author: Dify
         desc: ''
@@ -447,7 +451,7 @@ workflow:
       positionAbsolute:
         x: 638
         y: 164.77211499638162
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom-note
@@ -486,7 +490,40 @@ workflow:
       targetPosition: left
       type: custom-note
       width: 491
+    - data:
+        author: nyanta
+        desc: ''
+        height: 207
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"sys.dialogue_count","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ですが、バージョンによっては入力の","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"カウントが1始まりとなる","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"ようです(執筆時点では0始まりでした)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"最初の入力で使い方の説明が表示されない場合は、 0 → 1に変更するようお願いします。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 300
+      height: 207
+      id: '1759737757814'
+      position:
+        x: 288.8629044835326
+        y: 445.9729003906251
+      positionAbsolute:
+        x: 288.8629044835326
+        y: 445.9729003906251
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 300
     viewport:
-      x: 102
-      y: 272.81896972656244
-      zoom: 0.7
+      x: 303.029853188001
+      y: 34.201614766095986
+      zoom: 0.8794335968420494
+  rag_pipeline_variables: []
